@@ -1,0 +1,110 @@
+[
+{
+  "id": "1.34",
+  "text": "architektura váhání masky co srostly s obličejem poezie paneláků a šamponů",
+  "type": "urbanisticko-symbolický blok",
+  "function": "propojuje váhání, identitu a estetiku každodennosti",
+  "fields": ["váhání", "maska", "poezie", "urbanita"],
+  "movement": "zastavení → prorůstání",
+  "intensity": "střední",
+  "language": "cs",
+  "version": "1.0",
+  "created": "2026-01-16",
+  "source": "[Semantic Gap Generative Dataset v1.0] od Michaela Nováková",
+  
+  "multi_modal_examples": {
+    "visual_generation": {
+      "prompt": "architektura váhání, masky co srostly s obličejem, poezie paneláků a šamponů, surrealistická koláž, hyperrealistický styl, světla města, interiéry paneláků, rozostřené identity, hybridní bytosti --ar 16:9 --style raw",
+      "generated_image_url": "ukazka_1.34_visual.jpg"
+    },
+    "game_design": {
+      "concept": "Hra 'Panelákové masky': Hráč prochází brutalistickou architekturou, kde každá místnost je definována jiným 'šamponem' (mechanikou). Postava sbírá 'masky' (schopnosti), které se jí přirostou k obličeji a mění její interakci s prostředím. 'Váhání' je mechanika: čím déle hráč váhá před rozhodnutím, tím více se architektura proměňuje.",
+      "mechanics": ["masky jako permanentní upgrade", "prostředí reagující na čas rozhodování", "estetika banálního spotřebního zboží jako narativní prvek"]
+    },
+    "sound_design": {
+      "concept": "Zvuková skladba 'Šamponová symfonie': Vrstvení zvuků panelákového života (výtah, televize za zdí) s reklamami na šampony a opakujícími se rytmy každodenní hygieny. 'Masky' jsou reprezentovány zkreslenými vzorky lidských hlasů. 'Váhání' je vyjádřeno nepravidelnými pause a náhlými změnami tempa.",
+      "elements": ["ambientní šum sídliště", "zkreslené reklamní slogany", "ritualizované zvuky mytí vlasů", "nepravidelný metronom"]
+    },
+    "choreography": {
+      "concept": "Taneční piece 'Srostliny': Tanečníci se pohybují v geometricky definovaném prostoru (panelák). Jejich pohyb je přerývaný, 'váhavý'. Masky jsou naznačeny rukama přirostlými k obličeji. 'Poezie šamponů' je vyjádřena opakujícími se, banálně krásnými gesty (jako mytí vlasů), které se stávají rituálem.",
+      "movement_keys": ["přerušovaná kinetika", "kruhové pohyby kolem obličeje", "náhlé ztuhnutí a plynulé uvolnění"]
+    },
+    "narrative_scene": {
+      "concept": "Krátký film 'Larva': Protagonista žije v paneláku a zjišťuje, že sousedé ztrácejí obličeje - místo nich mají lesklé, reklamní masky. Jediná 'poezie', která zbývá, je v rituálech čistoty. Film končí scénou, kde se protagonistův vlastní odraz v lahvi šampunu začne pohybovat nezávisle na něm.",
+      "visual_style": "hyperrealistický surrealismus, světla neonových reklam, textury betonu a lesklého plastu"
+   }
+    }
+  },
+   {
+  "id": "1.43",
+  "text": "strážkyně řeči glamour s blánami technika předstírající zvíře",
+  "type": "techno-rituální blok",
+  "function": "zkoumá ochranu komunikace skrze estetiku a biomimetiku",
+  "fields": ["řeč", "glamour", "technika", "zvíře"],
+  "movement": "ochrana → simulace",
+  "intensity": "vysoká",
+  "language": "cs",
+  "version": "1.0",
+  "created": "2026-01-16",
+  "source": "[Semantic Gap Generative Dataset v1.0] od Michaela Nováková",
+  
+  "multi_modal_examples": {
+    "visual_generation": {
+      "prompt": "strážkyně řeči, glamour s blánami, technika předstírající zvíře, biomechanický surrealismus, lesklé povrchy, průhledné membrány, hybrid člověk-stroj-zvíře, dramatické osvětlení, modrozlatá paleta --ar 4:5",
+      "generated_image_url": "ukazka_strážkyně.jpg"
+    },
+    "game_design": {
+      "concept": "Hra 'Mlčenliví strážci': Hráč ovládá postavu, která musí projít sítí 'strážkyň řeči' - bytostí, které blokují komunikaci. Každá strážkyně má 'glamour' (oslnivý útok) a 'blány' (ochranné štíty). Hráč musí používat 'techniku předstírající zvíře' (nástroje napodobující zvířecí chování), aby je překonal.",
+      "mechanics": ["systém oslnění/rozptýlení", "mechanické zvířecí nástroje", "rozbití blán správným zvukem"]
+    },
+    "sound_design": {
+      "concept": "Zvuková instalace 'Membrána': V místnosti jsou nainstalovány tenké blány (reálné nebo reprodukované), které rezonují. 'Řeč' je reprezentována fragmenty rozhovorů. 'Glamour' je syntetický, lesklý zvukový povrch. 'Technika předstírající zvíře' jsou mechanické zvuky, které náhle přecházejí v organické (zpěv ptáků, řev).",
+      "elements": ["rezonující folie", "zkreslené hlasy za filtrem", "high-frequency syntetické tóny", "mechanické zvuky přecházející v biologické"]
+    },
+    "choreography": {
+      "concept": "Tanec 'Blána řeči': Tanečnice je obalena průhlednou látkou (blána). Její pohyby jsou nejdříve strnulé, ochranné ('strážkyně'). Postupně 'glamour' - plynulé, okázalé pohyby - proráží blánu. 'Technika předstírající zvíře' je vyjádřena náhlými, instinktivními pohyby na zemi.",
+      "movement_keys": ["omezený pohyb kvůli bláně", "náhlé explozivní uvolnění", "plazivé/zvířecí sekvence"]
+    },
+    "narrative_scene": {
+      "concept": "Sci-fi scéna 'Poslední tlumočnice': V budoucnosti, kde je řeč regulována, 'strážkyně řeči' monitorují veškerou komunikaci. Protagonistka objeví undergroundovou techniku 'zvířecí řeči' - zařízení, které překládá myšlenky do zvířecích projevů, čímž obchází cenzuru. Její vlastní tělo se začne pokrývat 'blánami' glamouru jako vedlejší účinek.",
+      "visual_style": "cyberpunk s organickými prvky, neonové barvy na průhledných površích"
+   }
+    }
+   },
+  {
+  "id": "1.29",
+  "text": "soutěž pohledů bez poroty nepřestupek je vnímán jako hrozba matka z nikotinu a kočičích očí",
+  "type": "sociálně-psychologický blok",
+  "function": "zkoumá paranoiu, sociální dohled a toxickou mateřskou figuru",
+  "fields": ["pohled", "soutěž", "hrozba", "matka", "toxicita"],
+  "movement": "pozorování → paranoia",
+  "intensity": "vysoká",
+  "language": "cs",
+  "version": "1.0",
+  "created": "2026-01-16",
+  "source": "[Semantic Gap Generative Dataset v1.0] od Michaela Nováková",
+  
+  "multi_modal_examples": {
+    "visual_generation": {
+      "prompt": "soutěž pohledů bez poroty, nepřestupek jako hrozba, matka z nikotinu a kočičích očí, psychologické napětí, filmové noir osvětlení, zahlcené kompozice, výrazné oči, kouřové atmosféry --ar 16:9 --style cinematic",
+      "generated_image_url": "ukazka_soutěž_pohledů.jpg"
+    },
+    "game_design": {
+      "concept": "Sociální horror hra 'Pohledy': Hráč je v uzavřené komunitě, kde každý neustále sleduje ostatní. 'Soutěž pohledů' je mechanika - musíš se dívat na správné lidi ve správný čas, ale bez jasných pravidel ('bez poroty'). I malý 'nepřestupek' (např. podívání se příliš krátce) spustí eskalaci. 'Matka' je NPC, která kombinuje zdánlivou péči (kočičí oči) s toxickým vlivem (nikotinová aura, která postupně poškozuje hráčovu postavu).",
+      "mechanics": ["systém vzájemného sledování", "postupná intoxikace při blízkosti 'matky'", "neviditelná sociální pravidla"]
+    },
+    "sound_design": {
+      "concept": "Zvuková esej 'Nikotinové lůno': Prostorový zvuk, kde se 'pohledy' projevují jako zvuky přicházející z různých směrů. 'Soutěž' je rytmické střídání těchto zvuků. 'Nepřestupek' je náhlé ticho, které je vnímáno jako hrozba (zvuková absence). 'Matka' je reprezentována kombinací uklidňujícího předení kočky a nepříjemného, suchého kašle kuřáka.",
+      "elements": ["prostorové zvuky pohybující se kolem posluchače", "náhlá ticha", "kočičí předení přecházející v kašel", "odposlechy šepotu"]
+    },
+    "choreography": {
+      "concept": "Kontaktní improvizace 'Toxická observace': Skupina tanečníků se neustále pozoruje. Pohyb je založen na reakci na pohledy ostatních. 'Soutěž' se projevuje snahou upoutat pozornost. 'Nepřestupek' je jakékoli zavření očí nebo odvrácení pohledu, na což skupina reaguje agresivnějším pohybem. 'Matka' je tanečnice, jejíž pohyb kombinuje kočičí plynulost s křečovitými záchvěvy.",
+      "movement_keys": ["pohyb iniciovaný pohledem", "náhlé zmrazení při porušení pravidla", "kontrast mezi plynulostí a křečovitostí"]
+    },
+    "narrative_scene": {
+      "concept": "Krátký film 'Dohlížitelé': V malém městečku probíhá každoroční 'soutěž pohledů' - kdo nejlépe odhadne, na koho se kdo dívá. Hrdinka udělá drobný prohřešek (podívá se na špatnou osobu) a celé město ji začne vnímat jako hrozbu. Jediná, kdo s ní mluví, je její matka - závislá kuřačka s pronikavýma očima, která ji ale zároveň pasivně-agresivně špehuje pro 'dobro komunity'.",
+      "visual_style": "klauzofobní kompozice, teplé/zkažené barvy interiérů 70. let, extrémní detaily očí"
+    }
+ }
+  }
+ ]
