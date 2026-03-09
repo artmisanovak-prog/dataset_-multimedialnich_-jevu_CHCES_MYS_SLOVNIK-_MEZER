@@ -1,0 +1,13 @@
+{
+  "datasets": [
+    { "name": "Ukázka zdarma", "file": "_sample/sample.json" },
+    { "name": "Moc a autorita", "file": "kultura-moc.json" },
+    { "name": "Trh a konzum", "file": "kultura-trh.json" },
+    { "name": "Symboly a mýty", "file": "kultura-symboly.json" },
+    { "name": "Archetypy a identity", "file": "psychologie-archetypy.json" },
+    { "name": "Stavy a emoce", "file": "psychologie-stavy.json" },
+    { "name": "Vztahy a dynamika", "file": "psychologie-vztahy.json" },
+    { "name": "Jazykové vrstvy", "file": "jazykove-vrstvy.json" },
+    { "name": "Surrealistický atlas", "file": "surrealisticky-atlas.json" }
+  ]
+}
