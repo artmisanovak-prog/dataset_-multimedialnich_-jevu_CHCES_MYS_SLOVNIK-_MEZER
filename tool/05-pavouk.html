@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pavouk | Dataset Chceš myš</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #fff;
+            color: #111;
+            font-family: 'Georgia', serif;
+            padding: 1rem;
+        }
+        #toolbar {
+            background: #f5f5f5;
+            border: 1px solid #aaa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        button, select {
+            background: #fff;
+            border: 1px solid #333;
+            padding: 0.4rem 0.8rem;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+        }
+        button:hover { background: #ddd; }
+        #canvasContainer {
+            border: 1px solid #666;
+            background: #fefefe;
+            width: 100%;
+            height: 700px;
+            position: relative;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+        }
+        #info {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            border-top: 1px dashed #aaa;
+            padding-top: 1rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            background: #000;
+            border-radius: 50%;
+        }
+        .legend-color.line { height: 2px; width: 20px; background: #333; border-radius: 0; }
+    </style>
+</head>
+<body>
+    <div id="toolbar">
+        <button onclick="loadSample()">Načíst ukázku (_sample)</button>
+        <span id="blockCount">0 bloků</span>
+        <button onclick="resetSimulation()">Reset pozic</button>
+        <button onclick="toggleDrag()" id="dragBtn">🔒 Tahání uzamčeno</button>
+    </div>
+    <div id="canvasContainer">
+        <canvas id="graphCanvas" width="1000" height="700"></canvas>
+    </div>
+    <div id="info">Klikni na uzel pro detail. Stejné vrstvy jsou propojeny.</div>
+    <div class="legend" id="legend"></div>
+
+    <script>
+        let allBlocks = [];
+        let nodes = [];        // { id, text, vrstva, x, y, vx, vy, fixed }
+        let edges = [];        // { from, to, weight }
+        let selectedNode = null;
+        let dragging = false;
+        let dragNode = null;
+        let mouseX, mouseY;
+        let animationFrame;
+        let ctx;
+        const canvas = document.getElementById('graphCanvas');
+        const W = 1000, H = 700;
+
+        // Nastavení canvasu
+        ctx = canvas.getContext('2d');
+
+        // Načtení ukázky
+        async function loadSample() {
+            try {
+                const res = await fetch('../dataset/_sample/sample.json');
+                const data = await res.json();
+                allBlocks = data;
+                buildGraph();
+                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků`;
+            } catch (e) {
+                alert('Nepodařilo se načíst ukázku.');
+            }
+        }
+
+        // Postaví uzly a hrany (podle společných vrstev)
+        function buildGraph() {
+            nodes = allBlocks.map((block, idx) => ({
+                id: idx,
+                text: block.text,
+                vrstva: block.vrstva || 'filozofický',
+                x: Math.random() * W,
+                y: Math.random() * H,
+                vx: 0, vy: 0,
+                fixed: false
+            }));
+
+            edges = [];
+            // hrana pokud stejná vrstva
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i+1; j < nodes.length; j++) {
+                    if (nodes[i].vrstva === nodes[j].vrstva) {
+                        edges.push({ from: i, to: j, weight: 1 });
+                    }
+                }
+            }
+            // spustíme simulaci
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+            simulate();
+        }
+
+        // Fyzikální simulace (odpuzování, pružiny)
+        function simulate() {
+            const repulsion = 500; // síla odpuzování
+            const springLength = 150; // ideální délka hrany
+            const springStrength = 0.1;
+            const dt = 0.1;
+
+            function step() {
+                // reset sil
+                nodes.forEach(n => { n.ax = 0; n.ay = 0; });
+
+                // odpuzování všech uzlů
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i+1; j < nodes.length; j++) {
+                        let dx = nodes[i].x - nodes[j].x;
+                        let dy = nodes[i].y - nodes[j].y;
+                        let dist = Math.sqrt(dx*dx + dy*dy) || 1;
+                        let force = repulsion / (dist * dist);
+                        let fx = (dx / dist) * force;
+                        let fy = (dy / dist) * force;
+                        nodes[i].ax += fx;
+                        nodes[i].ay += fy;
+                        nodes[j].ax -= fx;
+                        nodes[j].ay -= fy;
+                    }
+                }
+
+                // pružiny podle hran
+                edges.forEach(e => {
+                    let a = nodes[e.from];
+                    let b = nodes[e.to];
+                    let dx = a.x - b.x;
+                    let dy = a.y - b.y;
+                    let dist = Math.sqrt(dx*dx + dy*dy) || 1;
+                    let force = (springLength - dist) * springStrength;
+                    let fx = (dx / dist) * force;
+                    let fy = (dy / dist) * force;
+                    a.ax += fx;
+                    a.ay += fy;
+                    b.ax -= fx;
+                    b.ay -= fy;
+                });
+
+                // integrace
+                nodes.forEach(n => {
+                    if (!n.fixed) {
+                        n.vx += n.ax * dt;
+                        n.vy += n.ay * dt;
+                        // tření
+                        n.vx *= 0.95;
+                        n.vy *= 0.95;
+                        n.x += n.vx;
+                        n.y += n.vy;
+
+                        // okraje
+                        n.x = Math.max(20, Math.min(W-20, n.x));
+                        n.y = Math.max(20, Math.min(H-20, n.y));
+                    }
+                });
+
+                draw();
+                animationFrame = requestAnimationFrame(step);
+            }
+            step();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+
+            // kreslíme hrany (šedé, různá tloušťka podle weight)
+            edges.forEach(e => {
+                let a = nodes[e.from];
+                let b = nodes[e.to];
+                ctx.beginPath();
+                ctx.moveTo(a.x, a.y);
+                ctx.lineTo(b.x, b.y);
+                ctx.strokeStyle = '#aaa';
+                ctx.lineWidth = 0.5 + e.weight;
+                ctx.stroke();
+            });
+
+            // kreslíme uzly (podle vrstvy různé tvary/stínování)
+            nodes.forEach((n, i) => {
+                ctx.beginPath();
+                // tvar: kruh, čtverec, trojúhelník podle vrstvy
+                if (n.vrstva === 'filozofický') ctx.arc(n.x, n.y, 8, 0, 2*Math.PI);
+                else if (n.vrstva === 'kulturní') ctx.rect(n.x-8, n.y-8, 16, 16);
+                else if (n.vrstva === 'jazykový') {
+                    ctx.moveTo(n.x, n.y-10);
+                    ctx.lineTo(n.x+10, n.y+5);
+                    ctx.lineTo(n.x-10, n.y+5);
+                    ctx.closePath();
+                } else {
+                    ctx.arc(n.x, n.y, 8, 0, 2*Math.PI);
+                }
+
+                // výplň podle vrstvy (odstíny šedi)
+                if (n.vrstva === 'absurdní') ctx.fillStyle = '#111';
+                else if (n.vrstva === 'ironický') ctx.fillStyle = '#333';
+                else if (n.vrstva === 'psychologický') ctx.fillStyle = '#666';
+                else if (n.vrstva === 'archetypální') ctx.fillStyle = '#999';
+                else ctx.fillStyle = '#ccc';
+                ctx.fill();
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // pokud je vybraný, zvýrazníme
+                if (selectedNode === i) {
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, 12, 0, 2*Math.PI);
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            });
+
+            // popisky (jen při najetí nebo pro vybraný)
+            // pro zjednodušení vypíšeme text u vybraného
+            if (selectedNode !== null) {
+                let n = nodes[selectedNode];
+                ctx.font = '12px Georgia';
+                ctx.fillStyle = '#000';
+                ctx.fillText(n.text.substring(0, 30) + '…', n.x + 15, n.y - 15);
+            }
+        }
+
+        // Interakce myší
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            mouseX = (e.clientX - rect.left) * scaleX;
+            mouseY = (e.clientY - rect.top) * scaleY;
+
+            // hledáme uzel
+            let minDist = 20;
+            let hit = null;
+            nodes.forEach((n, idx) => {
+                let d = Math.hypot(mouseX - n.x, mouseY - n.y);
+                if (d < minDist) {
+                    minDist = d;
+                    hit = idx;
+                }
+            });
+
+            if (hit !== null) {
+                selectedNode = hit;
+                if (dragEnabled) {
+                    dragNode = hit;
+                    nodes[hit].fixed = true;
+                }
+            } else {
+                selectedNode = null;
+            }
+            draw();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (dragNode !== null) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                nodes[dragNode].x = (e.clientX - rect.left) * scaleX;
+                nodes[dragNode].y = (e.clientY - rect.top) * scaleY;
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            if (dragNode !== null) {
+                nodes[dragNode].fixed = false;
+                dragNode = null;
+            }
+        });
+
+        let dragEnabled = false;
+        function toggleDrag() {
+            dragEnabled = !dragEnabled;
+            document.getElementById('dragBtn').innerText = dragEnabled ? '🔓 Tahání povoleno' : '🔒 Tahání zamčeno';
+        }
+
+        function resetSimulation() {
+            nodes.forEach(n => {
+                n.x = Math.random() * W;
+                n.y = Math.random() * H;
+                n.vx = 0; n.vy = 0;
+                n.fixed = false;
+            });
+        }
+
+        window.onload = loadSample;
+    </script>
+</body>
+</html>
