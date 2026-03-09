@@ -4,7 +4,7 @@
 Tento balíček obsahuje bloky reflektující **kulturní symboly, mýty, stereotypy, společenské jevy a filozofické otázky**.  
 Jsou určeny pro konceptuální umělce, výzkumníky, kritiky, designéry a všechny, kdo zkoumají vztah jedince a společnosti.
 
-### Seznam bloků (v01)
+### Seznam bloků (řada 3.xx)
 
 | ID | Text |
 |----|------|
@@ -27,7 +27,38 @@ Jsou určeny pro konceptuální umělce, výzkumníky, kritiky, designéry a vš
 | 3.44 | revoluce vedená hlavu proti zdi nikdy poslední cigareta nikdy poslední výčitka symbol co ztratil červenou |
 | 3.48 | duchovno ve výrobě na zakázku nečinnost jako strategie neorientuji se v pravidlech |
 
+### Seznam bloků (řada 4.xx)
+
+| ID | Text |
+|----|------|
+| 4.01 | směr je důležitější než tempo totální výprodej falešných slz věta co se schová do sebe |
+| 4.08 | dokonalost jako psychóza apokryf z okraje módního časopisu když to svítí je to pravda |
+| 4.15 | identita vzniká z nekonečného zrcadlení vývoj směrem zpět popření reality rytmem |
+| 4.17 | svět jako past bez úmyslu archiv chyb které se nikdy nestaly návody nečte a nikdy se nezeptal |
+| 4.21 | perspektiva určuje hodnotu tělo bezvez začátku co se násobí nostalgie s klamištěm |
+| 4.24 | erotická výzva se zoologickým dohledem demontáž klišé moc jako prázdné místo |
+| 4.25 | hodnota věcí se mění s osvětlením okamžik s nohama smíření jako styl |
+| 4.27 | kdo sází a kdo je sázka? společenský omyl s rypákem trest za vyřčené |
+| 4.29 | hmota jako forma klidu kolektivní monolog sebeklam jako výchovná metoda |
+| 4.33 | kdy ochrana překročí hranici? počítání které se zlomí na zásadě hluk který brání přemýšlení - i ticho |
+| 4.42 | zvyk pokračovat i když je konec překvapení z předvídatelného etika bez barev |
+| 4.45 | pohyb jako absolutní přítomnost okamžik s nohama existovat jako zdroj |
+| 4.47 | definice moci negativem ozvěna co si myslí že je originál vidí do noční tmy ale nevidí vlastní myšlenky |
+| 4.49 | rozklad jako forma růstu malý problém jako absolutno sebejistota z hmotnosti |
+
+### Seznam bloků (řada 5.xx)
+
+| ID | Text |
+|----|------|
+| 5.12 | Disneyho bastard sebevědomí pomáhám i těm co mě sežerou estetika outsiderů |
+| 5.17 | stereotyp naruby redundance jako ornament Lucifer v krajice |
+| 5.19 | charita jako lovestory kašel místo plemene negace přísloví |
+| 5.20 | myslel že je to značka jídla touha po moci a síle kašel je jen přerušené slovo |
+| 5.34 | přestupek bez hříchu šperk který se rozpadne při svítání konzument smyslu |
+| 5.35 | pozoroval prahu underground doslova etika bez barev |
+| 5.45 | hrdinkou díky omylu nebeská chyba v živočišné výrobě srovnávací stupeň existence |
+
 ---
 
-**Počet bloků:** 18  
+**Aktuální počet bloků:** 18 (3.xx) + 14 (4.xx) + 7 (5.xx) = **39**  
 **Doporučené využití:** konceptuální umění, společenská kritika, worldbuilding, design systémů, performativní instalace.
