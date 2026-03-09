@@ -131,11 +131,15 @@ Každý balíček je **samostatný JSON soubor** s unikátním zaměřením. Po 
 
 | Balíček | Zaměření | Počet bloků | Basic | Extended |
 |---------|----------|-------------|-------|----------|
-| **🎭 Základ – Zvířecí archy** | Prvních 50 bloků napříč všemi vrstvami. Ideální pro první seznámení a menší projekty. | 50 | 190 € | 390 € |(doma/packs/01_zvireci_archy/README.md)
+| **🎭 Základ – Zvířecí archy** | Prvních 50 bloků napříč všemi vrstvami. Ideální pro první seznámení a menší projekty. | 50 | 190 € | 390 € |(packs/01_zvireci_archy.json)(doma/packs/01_zvireci_archy/README.md)
 | **🌀 Jazykové vrstvy** | Bloky zaměřené na jazyk, řeč, rytmus a metaforu (vrstvy jazykový, absurdní, ironický). Pro textaře, básníky, zvukové experimenty. | 70 | 290 € | 490 € |(doma/packs/02_jazykove_vrstvy/README.md)
-| **🧠 Psychologické portréty** | Bloky zkoumající stavy mysli, emoce, vztahy (psychologický, intro, archetypální). Pro scénáristy, herní designéry, performery. | 80 | 340 € | 590 € |(doma/pack/03_psychologicke_portrety/README.md)
+| **🧠 Psychologické portréty** | Bloky zkoumající stavy mysli, emoce, vztahy (psychologický, intro, archetypální). Pro scénáristy, herní designéry, performery. | 80 | 340 € | 590 € |(doma/pack/03_psychologicke_portrety/psychologie-stavy.json)
+- [psychologie-vztahy](doma/packs/04_surrealisticky_archiv.json)
 | **🌌 Surrealistický atlas** | Surrealistické, groteskní a absurdní bloky plné obrazů a snových logik. Pro vizuální umělce, animátory, tvůrce instalací. | 90 | 390 € | 690 € |(doma/packs/04_surrealisticky_atlas/README.md)
-| **🏛️ Kulturní kódy** | Bloky reflektující kulturní symboly, mýty, stereotypy a společenské jevy (kulturní, naivní, filozofický). Pro konceptuální umění, výzkum, kritiku. | 100 | 440 € | 790 € |(doma/packs/05_kulturni_kody/README.md)
+| **🏛️ Kulturní kódy** | Bloky reflektující kulturní symboly, mýty, stereotypy a společenské jevy (kulturní, naivní, filozofický). Pro konceptuální umění, výzkum, kritiku. | 100 | 440 € | 790 € |
+- [kultura-moc](doma/packs/05_kulturani_kody/kultura-moc.json)
+- [kultura-trh](doma/packs/05_kulturni_kody/kultura-trh)
+- [kultura-symboly](doma/packs/05_kulturni_kody/kultura-symboly.json)
 | **🕸️ Kompletní síť** | Všechny bloky dohromady (cca 500). Nejvyšší hodnota – nekonečné kombinace a permutace. | ~500 | 990 € | 1890 € |(doma/packs/06_kompletni_sit/README.md)
 
 ---
