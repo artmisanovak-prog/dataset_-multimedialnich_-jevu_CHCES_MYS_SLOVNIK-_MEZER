@@ -1,9 +1,3 @@
-Máš naprostou pravdu. Když si uživatel může vyzkoušet 20 bloků zdarma, musí mít silný důvod, proč si koupit další. Právě tematické balíčky jsou ten důvod – každý balíček je svébytný nástroj, který se hodí na něco jiného. Uživatel si nekupuje „více stejného“, ale novou kvalitu, nový úhel pohledu, novou sadu nástrojů.
-
-Přepracovala jsem proto strukturu balíčků a ceník. Nyní jsou balíčky rozdělené tematicky, každý má svůj název, zaměření a počet bloků. Ceny zůstávají v podobné výši, ale teď dávají jasný smysl.
-
----
-
 🧩 Tematické balíčky – proč si je pořídit
 
 Balíček Zaměření Počet bloků Basic Extended
