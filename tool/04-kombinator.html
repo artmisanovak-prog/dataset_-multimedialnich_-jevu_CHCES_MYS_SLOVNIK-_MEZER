@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kombinátor | Dataset Chceš myš</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #fff;
+            color: #111;
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2 { font-weight: 300; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; margin-bottom: 1.5rem; }
+        .toolbar {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #aaa;
+        }
+        select, button {
+            background: #fff;
+            border: 1px solid #333;
+            padding: 0.5rem 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+        button { background: #eaeaea; }
+        button:hover { background: #ccc; }
+        .block-panel { display: flex; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+        .block-selector { flex: 1; min-width: 250px; }
+        .block-card {
+            border: 1px solid #444;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: #fafafa;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .block-card.selected { border: 3px solid #000; background: #eee; }
+        .block-card .vrstva { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        /* stejné typografické třídy jako v permutátoru */
+        .vrstva-filozoficky { font-family: 'Georgia', serif; }
+        .vrstva-kulturni { font-family: 'Georgia', serif; font-style: italic; }
+        .vrstva-jazykovy { font-family: 'Arial', sans-serif; }
+        .vrstva-groteskni { font-family: 'Arial', sans-serif; font-style: italic; }
+        .vrstva-ironicky { font-family: 'Courier New', monospace; }
+        .vrstva-surrealisticky { font-family: 'Courier New', monospace; font-style: italic; }
+        .vrstva-absurdni { font-family: 'Times New Roman', serif; font-weight: bold; letter-spacing: 1px; }
+        .vrstva-psychologicky { font-weight: 300; font-family: 'Verdana', sans-serif; }
+        .vrstva-naivni { font-variant: small-caps; }
+        .vrstva-intro { font-weight: bold; font-size: 0.95rem; }
+        .vrstva-archetypalni { line-height: 2; letter-spacing: 2px; }
+
+        .concept-output {
+            margin-top: 2rem;
+            border-top: 1px solid #aaa;
+            padding-top: 2rem;
+        }
+        .concept-box {
+            background: #f2f2f2;
+            border: 1px solid #666;
+            padding: 2rem;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        .media-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .media-tab {
+            background: #ddd;
+            border: 1px solid #333;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        .media-tab.active {
+            background: #fff;
+            border-bottom: 1px solid #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧩 Kombinátor</h1>
+    <p>Vyber 2–3 bloky a nech vygenerovat multimediální koncept.</p>
+
+    <div class="toolbar">
+        <button onclick="loadSample()">Načíst ukázku (_sample)</button>
+        <span id="blockCount">0 bloků načteno</span>
+    </div>
+
+    <div class="block-panel">
+        <div class="block-selector">
+            <h2>Bloky (kliknutím vybereš)</h2>
+            <div id="blocksContainer"></div>
+        </div>
+        <div class="block-selector">
+            <h2>Vybrané (2–3)</h2>
+            <div id="selectedContainer"></div>
+            <button onclick="clearSelection()" style="margin-top: 1rem;">Vymazat vše</button>
+        </div>
+    </div>
+
+    <div class="concept-output" id="conceptSection" style="display: none;">
+        <h2>Generovaný koncept</h2>
+        <div class="media-tabs">
+            <div class="media-tab active" data-media="film" onclick="switchMedia('film')">Film</div>
+            <div class="media-tab" data-media="game" onclick="switchMedia('game')">Hra</div>
+            <div class="media-tab" data-media="installation" onclick="switchMedia('installation')">Instalace</div>
+            <div class="media-tab" data-media="sound" onclick="switchMedia('sound')">Zvuk</div>
+        </div>
+        <div id="conceptBox" class="concept-box"></div>
+    </div>
+
+    <script>
+        let allBlocks = [];
+        let selectedBlocks = [];
+        let currentMedia = 'film';
+
+        async function loadSample() {
+            try {
+                const response = await fetch('../dataset/_sample/sample.json');
+                const data = await response.json();
+                allBlocks = data;
+                selectedBlocks = [];
+                renderBlocks();
+                renderSelected();
+                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+                document.getElementById('conceptSection').style.display = 'none';
+            } catch (e) {
+                alert('Nepodařilo se načíst ukázku.');
+            }
+        }
+
+        function renderBlocks() {
+            const container = document.getElementById('blocksContainer');
+            container.innerHTML = '';
+            allBlocks.forEach((block, idx) => {
+                const card = document.createElement('div');
+                card.className = `block-card ${selectedBlocks.includes(block) ? 'selected' : ''}`;
+                card.onclick = () => selectBlock(block);
+                card.innerHTML = `<div class="vrstva vrstva-${(block.vrstva || 'filozoficky').toLowerCase()}">${block.vrstva || '?'}</div>
+                                  <div class="text">${block.text}</div>`;
+                container.appendChild(card);
+            });
+        }
+
+        function selectBlock(block) {
+            if (selectedBlocks.includes(block)) {
+                selectedBlocks = selectedBlocks.filter(b => b !== block);
+            } else {
+                if (selectedBlocks.length >= 3) {
+                    alert('Maximálně 3 bloky.');
+                    return;
+                }
+                selectedBlocks.push(block);
+            }
+            renderBlocks();
+            renderSelected();
+            if (selectedBlocks.length >= 2) {
+                generateConcept();
+                document.getElementById('conceptSection').style.display = 'block';
+            } else {
+                document.getElementById('conceptSection').style.display = 'none';
+            }
+        }
+
+        function renderSelected() {
+            const container = document.getElementById('selectedContainer');
+            container.innerHTML = '';
+            selectedBlocks.forEach(block => {
+                const card = document.createElement('div');
+                card.className = 'block-card';
+                card.onclick = () => selectBlock(block);
+                card.innerHTML = `<div class="vrstva vrstva-${(block.vrstva || 'filozoficky').toLowerCase()}">${block.vrstva || '?'}</div>
+                                  <div class="text">${block.text}</div>`;
+                container.appendChild(card);
+            });
+        }
+
+        function clearSelection() {
+            selectedBlocks = [];
+            renderBlocks();
+            renderSelected();
+            document.getElementById('conceptSection').style.display = 'none';
+        }
+
+        function switchMedia(media) {
+            currentMedia = media;
+            document.querySelectorAll('.media-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.media === media) tab.classList.add('active');
+            });
+            if (selectedBlocks.length >= 2) generateConcept();
+        }
+
+        function generateConcept() {
+            // jednoduchý generátor konceptů podle aktuálního média a vybraných bloků
+            const texts = selectedBlocks.map(b => b.text);
+            const vrstvy = selectedBlocks.map(b => b.vrstva || 'neznámá');
+            let concept = '';
+
+            if (currentMedia === 'film') {
+                concept = `Filmový koncept: Kombinace bloků „${texts.join('“, „')}“ vytváří příběh o `;
+                if (vrstvy.includes('filozofický')) concept += 'hledání smyslu, ';
+                if (vrstvy.includes('absurdní')) concept += 'absurdních situacích, ';
+                if (vrstvy.includes('psychologický')) concept += 'vnitřních stavech postav. ';
+                concept += 'Hlavní hrdina se pohybuje mezi realitou a jejím odrazem, přičemž každý z bloků představuje jednu vrstvu vědomí.';
+            } else if (currentMedia === 'game') {
+                concept = `Herní mechanika: Hráč musí kombinovat „${texts[0]}“ a „${texts[1]}“`;
+                if (selectedBlocks.length === 3) concept += ` a „${texts[2]}“`;
+                concept += '. Každá kombinace odemyká novou schopnost nebo část příběhu. Vrstvy (';
+                concept += vrstvy.join(', ');
+                concept += ') určují herní žánr: od filozofické adventury po absurdní plošinovku.';
+            } else if (currentMedia === 'installation') {
+                concept = `Instalace: Prostorová kompozice inspirovaná texty: „${texts.join('“ / „')}“. Návštěvník prochází místnostmi, kde každá reprezentuje jednu vrstvu (${vrstvy.join(', ')}). Zvuky, světla a textury vytvářejí atmosféru mezi snem a realitou.`;
+            } else if (currentMedia === 'sound') {
+                concept = `Zvuková kompozice: Rytmické a melodické struktury odvozené od textů. „${texts[0]}“ generuje basovou linku, „${texts[1] || 'druhý blok'}“ přidává samply a „${texts[2] || 'třetí'}“ vytváří ambientní plochy. Výsledek je zvuková krajina na pomezí jazyka a hudby.`;
+            }
+
+            document.getElementById('conceptBox').innerText = concept;
+        }
+
+        window.onload = loadSample;
+    </script>
+</body>
+</html>
