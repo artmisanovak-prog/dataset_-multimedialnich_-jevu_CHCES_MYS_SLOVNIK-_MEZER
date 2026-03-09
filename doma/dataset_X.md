@@ -291,3 +291,414 @@ symboly přežití prostě má rád všechny barvy náhoda která se tváří ja
 0.84
 výška převyšující perspektivu prostě to mám napsaný na krabičce my je máme taky máme
 
+
+předehra ve voliéře snů možná se prostě baví oheň který nefunguje
+
+romantika pro rozdílné váhové kategorie smích bez důvodu stereotyp naruby 
+
+identita vzniká z nekonečného zrcadlení nevinnost jako struktura otázka je dárek 
+1.004free
+oči které se rozmnožují i klíště sní o laních otázka je dárek **
+1.005free*
+barvy které neexistují ale štěkají pravda řečená bokem dokonalost jako psychóza 
+1.006free
+odlišnost jako důkaz života nevinnost jako infrastruktura obranný mechanismus ve formě sloganu **
+1.007free
+anatomie trhu když zpíváme nebolí to pohádka naroubovaná na realitu
+1.008free**
+živá legenda bez těla tanec v kosmu inventura citu 
+1.009free
+zákaz dává smysl zvuku zpěvník pro trichology sny které definují 
+1.010free
+nepřestupek je vnímán jako hrozba mysl která si sedla sama na sebe identita jako transformace 
+1.011**
+duchovno ve výrobě na zakázku nečinnost jako strategie neorientuji se v pravidlech 
+1.012
+modlitba jako outsourcing naděje zmražený okamžik nevhodnost jako zrcadlo prostředí 
+1.013
+demontáž klišé apokryf z okraje módního času turistika místo sprintu
+1.014
+dieta z emocí možná mám taky svůj hadí původ rychlost jako rozptýlení 
+1.015*
+trávení interpunkce matematika v oceánu víra jako slovník ne jakou fakt
+1.016*
+čísla vycházející z tlamy poměr místo příběhu obrana identity popředním původu
+1.017*
+věta bez slovesa reklama jako vyznání rytmus místo slov 
+1.018*
+zadržení pohybu jako kontrola emoce zlevněná na nulu hudba bez plic 
+1.019
+prorok přizpůsobení každý kámen má příběh kráva s existenciální úzkostí 
+1.020
+Také se neumí rozhodnout jakou má náladu otisk události jako poezie i moje hlava občas dělá bů
+1.021**
+ekosystém jako věta řád co si míchá s náhodu etika bez barev
+1.022*
+živná půda rozdělení přes interpretaci humanita v rukou predátora
+1.023**
+ty budeš já a já budu tvá  vzor na vzoru cykly v popelu 
+1.024*
+stín a zrcadlo v jednom identita jako kostým slovo poslední jako zaklínadlo opakování 
+1.025*
+nechtěla jsem to říct nahlas smíření jako styl zvuk vypuštěný z jazyka
+1.026*
+produktivita s vedlejšími účinky definice bez ambice efekt bez následku 
+1.027*
+moc jako prázdné místo to co fascinuje po tmě se za světla omlouvá jsem moc vysoko než abych zasáhla 
+1.028*
+král bez povinností část osobnosti která funguje jen beze svědků čím výš jsi tím méně rozumíš detailu
+1.029*
+jizva po pohlazení přetvářka která se stala charakterem pták co hledá význam v prázdnu
+1.030**
+karneval jako inventura osobnosti strážce ticha mezi pohledy 
+1.031*
+tanec čel nutnost výcviku jako paradox kohout jako token štěstí
+1.032*
+hrdinství bez mozku přitom jen chtěli bezpečí risk jako zkouška 
+1.033*
+autorita v kleci romantika ztracených významů orchestr ega bez dirigenta
+1.034
+strážce strážený pošťák co nosí sny pod vodou kolektivní monolog
+1.035*
+pokrok na zádech minulosti touha zjednodušit až na kost ptáci ve smyčce snů 
+1.036*
+podkovy asfaltu pokrok redukovaný na zbytek cyklus versus jedinečnost 
+1.037*
+neviditelná bolest je vidět jen v kruzích totální výprodej falešných slz sloveso místo modlitby
+1.038*
+prostě se to stalo emoce zlevněná na nulu víra v importovaný zázrak
+1.039*
+Estetika přebytku optimismus bez brzd reklama na identitu v černobílém světě
+1.040*
+Narcismus s peřím popření reality rytmem estetická diagnóza ega 
+1.041*
+identita jako systém reakčních reflexů pokušení jako cvičení trpělivosti obranný mechanismus ve formě sloganu
+1.042**
+autoportrét nálady v pohybu předehra ve voliéře snů moje chyba že je nevidím
+1.043*
+malý problém jako absolutno archiv chyb které se nikdy nestaly odolnost tam kde se čeká slabost
+1.044*
+vina bez soudu věta bez adresáta skok skrz nemožné
+1.045*
+pruhy přes pruhy pokrok redukovaný na zbytek  jen se ptám
+1.046*
+móda co nedává smysl vývoj směrem zpět neorientuji se v pravidlech
+1.047*
+revoluce vedená hlavu proti zdi nikdy poslední cigareta nikdy poslední výčitka symbol co ztratil červenou
+1.048
+síla bez reflexe dítě co se omlouvá věčnosti vlčí doktor bez očních filtrů
+1.049*
+srovnávací stupeň existence tečka jako vedlejší produkt věty význam ticha mezi možnostmi
+1.050*
+každá moje barva je trochu lež čísla vycházející z tlamy věta která ruší všechny ostatní
+
+
+KOCOUR OPICE RYBA PÁV VLK PANDA NETOPÝR DRAK TYGR LEMUR HAD
+
+0.001
+komunikace která nepotřebuje porozumění potlačený vztek s reklamním logem moje chyba že je nevidím
+0.002
+beat z bublin kašel místo plemene chyby nejsou tak je nehledej 
+0.003
+hodnota věcí se mění s osvětlením vlčí doktor bez očních stínů ego jako paleta se špatným krytím 
+mam verzi sebe kterou ukazuji jenom nocím 
+0.004
+archetyp léčitele s ostrými zuby reklama na identitu v černobílém světě 
+0.005
+podstata nezávislá na prostředí dívám se na sebe abych si byl jistý že existuji
+0.006
+žádný oheň nepálí stejně potřeba být viděn i když už se díváme
+0.007
+zmražený okamžik zlo jako vedlejší produkt světla kdo se stane kým?
+0.008
+viditelná nenápadnost osvícení ztrátou původu zvířecí metafora dětství 
+0.009
+perfekcionismus s opičím ocasem nepřestupek je vnímán jako hrozba hudba bez plic 
+0.010
+hlas podvědomí slepec pravdy kašel co vypráví příběh 
+0.011
+estetická diagnóza ega pomoc kterou nepoznáš když jsi hladový část osobnosti která funguje jen beze svědků 
+0.012
+Disneyho bastard sebevědomí pomáhám i těm co mě sežerou estetika outsiderů 
+0.013
+estetika přebytku přesnost tam kde na ní nezáleží drak kašle a lidé křičí 
+0.014
+soutěž pohledů bez poroty trávení interpunkce zvuk jako porušení pravidel 
+0.015
+překvapení z předvídatelného moralita v převleku za evoluci věta která ruší všechny ostatní 
+0.016
+role která mění vlastní formu věta která se svíjí jako to o čem mluví kontrast k výkonu 
+0.017
+stereotyp naruby redundance jako ornament Lucifer v krajice
+0.018
+okázalost která sleduje sama sebe zajíc není palivo moralita v převleku za evoluci
+0.019
+charita jako lovestory očekávání vs realita kašel místo plemene 
+0.020
+myslel že je to značka jídla touha po moci a síle kašel je jen přerušené slovo 
+0.021
+dokonalost jako psychóza kontrast k výkonu noční tvář já 
+0.022
+kdo nevidí chyby má špatný zrak - nebo pravdu pozorovatel prahu glamour s blánami 
+0.023
+konzument smyslu barvy které neexistují ale štěkají rytmus místo slov 
+0.024
+svědomí v dávkách odlišnost jako důkaz života hudba bez plic 
+0.025
+Rajská zahrada v make-up tutoriálu oběť která nehoří narcismus s peřím
+0.026
+vypadá roztomile dokud nepromluví legendou náhodou strážce obrazů já
+0.027
+zvuk jako porušení pravidel každý má své sny humanita v rukou predátora 
+0.028
+drak kašle a lidé křičí očekávání vs realita záchrana jako špatně přeložené slovo 
+0.029
+přídavné jméno platné jen v noci nenápadnost křičící imperativ samocenzury 
+0.030
+ve tmě jsem hezčí aktivní pasivita obranný mechanismus ve formě sloganu 
+0.031
+projev slyšitelný jen pod hladinou chce být prostě jiná statistiky trávení 
+0.032
+rytmus místo slov ego jako paleta se špatným krytím náhoda která se tváří jako pravidlo 
+0.033
+kašel co vypráví příběh elegance závislá na tmě čísla vycházející z tlamy 
+0.034
+přestupek bez hříchu šperk který se rozpadne při svítání konzument smyslu 
+0.035
+pozoroval prahu underground doslova etika bez barev 
+0.036
+nečinnost jako strategie vnitřní monolog bez svědků empatie slepá pro rozdíl 
+0.037
+klaun individuality anděl co zapomněl křídla ale nechal si jazyk oheň který nefunguje 
+0.038
+potřeba zazářit mezi skvrnami možná mám taky svůj hadí původ oběť která nehoří 
+0.039
+přání přiložené do symbolu kontrola kvality v krajině snu identita vznikla z nekonečného rozmnožují
+0.040
+každý má své sny perfekcionismus s opičím ocasem oči které se rozmnožují
+0.041
+náhoda která se tváří jako pravidlo šperk který se rozpadne při svítání drak na detoxu 
+0.042
+tečka jako vedlejší produkt věty ve tmě jsem hezčí legenda v karanténě 
+0.043
+symbol co ztratil červenou hlas podvědomí nemusím reagovat 
+0.044
+vlčí doktor bez očních filtrů prostě to plyne úleva z nevolby 
+0.045
+hrdinkou díky omylu nebeská chyba v živočišné výrobě srovnávací stupeň existence 
+0.046
+odolnost tam kde se čeká slabost apokryf z okraje módního časopisu každá moje barva je trochu lež 
+0.047
+očekávání naruby opice chyby nehledá tak nejsou okázalost která sleduje sama sebe 
+0.048
+překvapení z předvídatelného imperativ samocenzury identita vzniklá z nekonečného zrcadlení 
+0.049
+rytmus který mění vodu
+počítání jako tik
+detail který drží svět
+0.050
+skok skrz nemožné
+nemůžu to zastavit jen sledovat
+možná se jen houpe hlavou dolů a hraje si a tím mění pravidla
+----------
+0.001
+komunikace která nepotřebuje porozumění 
+potlačený vztek s reklamním logem 
+moje chyba že je nevidím
+0.002
+beat z bublin 
+kašel místo plemene 
+chyby nejsou tak je nehledej 
+0.003
+hodnota věcí se mění s osvětlením 
+vlčí doktor bez očních stínů 
+ego jako paleta se špatným krytím 
+0.004
+mam verzi sebe kterou ukazuji jenom nocím 
+archetyp léčitele s ostrými zuby 
+reklama na identitu v černobílém světě  
+0.005
+identita jako transformace 
+podstata nezávislá na prostředí 
+dívám se na sebe abych si byl jistý že existuji
+0.006
+žádný oheň nepálí stejně 
+potřeba být viděn i když už se díváme
+sny které definují 
+0.007
+zmražený okamžik 
+zlo jako vedlejší produkt světla 
+kdo se stane kým?
+0.008
+viditelná nenápadnost 
+osvícení ztrátou původu 
+zvířecí metafora dětství 
+0.009
+perfekcionismus s opičím ocasem 
+nepřestupek je vnímán jako hrozba 
+hudba bez plic 
+0.010
+hlas podvědomí 
+slepec pravdy 
+kašel co vypráví příběh 
+0.011
+estetická diagnóza ega 
+pomoc kterou nepoznáš když jsi hladový 
+část osobnosti která funguje jen beze svědků 
+0.012
+Disneyho bastard sebevědomí 
+pomáhám i těm co mě sežerou 
+estetika outsiderů 
+0.013
+estetika přebytku 
+přesnost tam kde na ní 
+nezáleží drak kašle a lidé křičí 
+0.014
+soutěž pohledů bez poroty 
+trávení interpunkce 
+zvuk jako porušení pravidel 
+0.015
+překvapení z předvídatelného 
+moralita v převleku za evoluci 
+věta která ruší všechny ostatní 
+0.016
+role která mění vlastní formu 
+věta která se svíjí jako to o čem mluví 
+kontrast k výkonu 
+0.017
+stereotyp naruby 
+redundance jako ornament 
+Lucifer v krajice
+0.018
+okázalost která sleduje sama sebe 
+zajíc není palivo 
+moralita v převleku za evoluci
+0.019
+charita jako lovestory  
+kašel místo plemene 
+negace přísloví 
+0.020
+myslel že je to značka jídla 
+touha po moci a síle 
+kašel je jen přerušené slovo 
+0.021
+dokonalost jako psychóza 
+kontrast k výkonu 
+noční tvář já 
+0.022
+kdo nevidí chyby má špatný zrak - nebo pravdu pozorovatel prahu 
+glamour s blánami 
+0.023
+konzument smyslu 
+barvy které neexistují ale štěkají 
+rytmus místo slov 
+0.024
+svědomí v dávkách 
+odlišnost jako důkaz života 
+hudba bez plic 
+0.025
+Rajská zahrada v make-up tutoriálu 
+oběť která nehoří 
+narcismus s peřím
+0.026
+vypadá roztomile dokud nepromluví 
+legendou náhodou 
+strážce obrazů já
+0.027
+zvuk jako porušení pravidel 
+každý má své sny 
+humanita v rukou predátora 
+0.028
+drak kašle a lidé křičí 
+očekávání vs realita 
+záchrana jako špatně přeložené slovo 
+0.029
+přídavné jméno platné jen v noci 
+nenápadnost křičící 
+imperativ samocenzury 
+0.030
+ve tmě jsem hezčí 
+aktivní pasivita 
+obranný mechanismus ve formě sloganu 
+0.031
+projev slyšitelný jen pod hladinou 
+chce být prostě jiná 
+statistiky trávení 
+0.032
+rytmus místo slov 
+ego jako paleta se špatným krytím 
+náhoda která se tváří jako pravidlo 
+0.033
+kašel co vypráví příběh 
+elegance závislá na tmě 
+čísla vycházející z tlamy 
+0.034
+přestupek bez hříchu 
+šperk který se rozpadne při svítání]]
+konzument smyslu]]
+0.035
+pozoroval prahu]]
+underground doslova]]
+etika bez barev]]
+0.036
+nečinnost jako strategie]]
+vnitřní monolog beze svědků]]
+empatie slepá pro rozdíl]]
+0.037
+klaun individuality]]
+anděl co zapomněl křídla ale nechal si jazyk]]
+oheň který nefunguje]]
+0.038
+potřeba zazářit mezi skvrnami]] 
+možná mám taky svůj hadí původ]]
+oběť která nehoří]]
+0.039
+přání přiložené do symbolu]]
+kontrola kvality v krajině snu]]
+identita vznikla z nekonečného rozmnožují]]
+0.040
+každý má své sny]]
+perfekcionismus s opičím ocasem]]
+oči které se rozmnožují]]
+0.041
+náhoda která se tváří jako pravidlo]]
+šperk který se rozpadne při svítání]]
+drak na detoxu]]
+0.042
+tečka jako vedlejší produkt věty]]
+ve tmě jsem]]
+hezčí legenda v karanténě]]
+0.043
+symbol co ztratil červenou]]
+hlas podvědomí]]
+nemusím reagovat]]
+0.044
+vlčí doktor bez očních filtrů]]
+prostě to plyne]]
+úleva z nevolby]]
+0.045
+hrdinkou díky omylu]] 
+nebeská chyba v živočišné výrobě]]
+[[srovnávací stupeň existence]]
+0.046
+[[každá moje barva je trochu lež]],
+[[význam ticha mezi možnostmi]], 
+[[odolnost tam kde se čeká slabost]]
+0.047
+[[očekávání naruby]], 
+[[opice chyby nehledá tak nejsou]], 
+[[okázalost která sleduje sama sebe]]
+0.048
+[[překvapení z předvídatelného]],
+[[imperativ samocenzury]], 
+[[identita vzniklá z nekonečného zrcadlení]]
+0.049
+[[rytmus který mění vodu]]
+[[počítání jako tik]]
+[[detail který drží svět]]
+0.050
+[[skok skrz nemožné]]
+[[nemůžu to zastavit jen sledovat]]
+[[možná se jen houpe hlavou dolů a hraje si a tím mění pravidla]]
+
+ 
