@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permutátor | Dataset Chceš myš</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #fff;
+            color: #111;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.3rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 { font-size: 2.2rem; }
+        h2 { font-size: 1.6rem; }
+        .toolbar {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #aaa;
+        }
+        .dataset-selector {
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+        select, button {
+            background: #fff;
+            border: 1px solid #333;
+            padding: 0.5rem 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+        button {
+            background: #eaeaea;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #ccc;
+        }
+        .block-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .block-selector {
+            flex: 1;
+            min-width: 250px;
+        }
+        .block-card {
+            border: 1px solid #444;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: #fafafa;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .block-card.selected {
+            border: 3px solid #000;
+            background: #eee;
+        }
+        .block-card .vrstva {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        .block-card .text {
+            font-size: 1rem;
+        }
+        /* typografické odlišení vrstev */
+        .vrstva-filozoficky { font-family: 'Georgia', serif; }
+        .vrstva-kulturni { font-family: 'Georgia', serif; font-style: italic; }
+        .vrstva-jazykovy { font-family: 'Arial', sans-serif; }
+        .vrstva-groteskni { font-family: 'Arial', sans-serif; font-style: italic; }
+        .vrstva-ironicky { font-family: 'Courier New', monospace; }
+        .vrstva-surrealisticky { font-family: 'Courier New', monospace; font-style: italic; }
+        .vrstva-absurdni { font-family: 'Times New Roman', serif; font-weight: bold; letter-spacing: 1px; }
+        .vrstva-psychologicky { font-weight: 300; font-family: 'Verdana', sans-serif; }
+        .vrstva-naivni { font-variant: small-caps; }
+        .vrstva-intro { font-weight: bold; font-size: 0.95rem; }
+        .vrstva-archetypalni { line-height: 2; letter-spacing: 2px; }
+
+        .permutations {
+            border-top: 1px solid #aaa;
+            padding-top: 2rem;
+        }
+        .perm-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .perm-item {
+            border: 1px solid #666;
+            padding: 1rem;
+            background: #f2f2f2;
+        }
+        .perm-item .order {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #444;
+            margin-bottom: 0.5rem;
+        }
+        .perm-item .block-text {
+            margin-bottom: 0.5rem;
+            padding-left: 0.5rem;
+            border-left: 2px solid #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔄 Permutátor</h1>
+    <p>Vybrané bloky (max 3) seřaď všemi způsoby. Každá permutace odhalí nový význam.</p>
+
+    <div class="toolbar">
+        <div class="dataset-selector">
+            <label for="dataset">Načíst dataset:</label>
+            <select id="dataset" onchange="loadDataset()"></select>
+        </div>
+        <button onclick="loadSample()">Načíst ukázku (_sample)</button>
+        <span style="margin-left: 1rem;" id="blockCount">0 bloků načteno</span>
+    </div>
+
+    <div class="block-panel">
+        <div class="block-selector">
+            <h2>Bloky (kliknutím vybereš)</h2>
+            <div id="blocksContainer"></div>
+        </div>
+        <div class="block-selector">
+            <h2>Vybrané (max 3)</h2>
+            <div id="selectedContainer"></div>
+            <button onclick="clearSelection()" style="margin-top: 1rem;">Vymazat vše</button>
+        </div>
+    </div>
+
+    <div class="permutations" id="permutationsSection" style="display: none;">
+        <h2>Permutace vybraných bloků</h2>
+        <div id="permutationsList" class="perm-list"></div>
+    </div>
+
+    <script>
+        // Data
+        let allBlocks = [];
+        let selectedBlocks = [];
+
+        // Načtení datasetů
+        async function loadDataset() {
+            const select = document.getElementById('dataset');
+            const path = select.value; // např. "../dataset/_sample/sample.json"
+            if (!path) return;
+            try {
+                const response = await fetch(path);
+                const data = await response.json();
+                allBlocks = data;
+                selectedBlocks = [];
+                renderBlocks();
+                renderSelected();
+                document.getElementById('permutationsSection').style.display = 'none';
+                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+            } catch (e) {
+                alert('Nepodařilo se načíst dataset: ' + e);
+            }
+        }
+
+        // Pro ukázku natvrdo načteme sample (pokud nefunguje select, dáme tlačítko)
+        async function loadSample() {
+            try {
+                const response = await fetch('../dataset/_sample/sample.json');
+                const data = await response.json();
+                allBlocks = data;
+                selectedBlocks = [];
+                renderBlocks();
+                renderSelected();
+                document.getElementById('permutationsSection').style.display = 'none';
+                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+            } catch (e) {
+                alert('Nepodařilo se načíst ukázku. Zkontroluj cestu ../dataset/_sample/sample.json');
+            }
+        }
+
+        // Vykreslení seznamu všech bloků
+        function renderBlocks() {
+            const container = document.getElementById('blocksContainer');
+            container.innerHTML = '';
+            allBlocks.forEach((block, idx) => {
+                const card = document.createElement('div');
+                card.className = `block-card ${selectedBlocks.includes(block) ? 'selected' : ''}`;
+                card.onclick = () => selectBlock(block);
+
+                const vrstvaDiv = document.createElement('div');
+                vrstvaDiv.className = `vrstva vrstva-${block.vrstva ? block.vrstva.toLowerCase() : 'filozoficky'}`;
+                vrstvaDiv.innerText = block.vrstva || 'neurčeno';
+
+                const textDiv = document.createElement('div');
+                textDiv.className = 'text';
+                textDiv.innerText = block.text;
+
+                card.appendChild(vrstvaDiv);
+                card.appendChild(textDiv);
+                container.appendChild(card);
+            });
+        }
+
+        // Výběr bloku
+        function selectBlock(block) {
+            if (selectedBlocks.includes(block)) {
+                // odstraň
+                selectedBlocks = selectedBlocks.filter(b => b !== block);
+            } else {
+                if (selectedBlocks.length >= 3) {
+                    alert('Můžeš vybrat maximálně 3 bloky.');
+                    return;
+                }
+                selectedBlocks.push(block);
+            }
+            renderBlocks();
+            renderSelected();
+            if (selectedBlocks.length >= 2) {
+                generatePermutations();
+            } else {
+                document.getElementById('permutationsSection').style.display = 'none';
+            }
+        }
+
+        // Vykreslení vybraných
+        function renderSelected() {
+            const container = document.getElementById('selectedContainer');
+            container.innerHTML = '';
+            selectedBlocks.forEach(block => {
+                const card = document.createElement('div');
+                card.className = 'block-card';
+                card.onclick = () => selectBlock(block); // kliknutím odebere
+
+                const vrstvaDiv = document.createElement('div');
+                vrstvaDiv.className = `vrstva vrstva-${block.vrstva ? block.vrstva.toLowerCase() : 'filozoficky'}`;
+                vrstvaDiv.innerText = block.vrstva || 'neurčeno';
+
+                const textDiv = document.createElement('div');
+                textDiv.className = 'text';
+                textDiv.innerText = block.text;
+
+                card.appendChild(vrstvaDiv);
+                card.appendChild(textDiv);
+                container.appendChild(card);
+            });
+        }
+
+        function clearSelection() {
+            selectedBlocks = [];
+            renderBlocks();
+            renderSelected();
+            document.getElementById('permutationsSection').style.display = 'none';
+        }
+
+        // Generování permutací (pro 2 nebo 3 bloky)
+        function generatePermutations() {
+            if (selectedBlocks.length < 2) return;
+            const perms = [];
+            if (selectedBlocks.length === 2) {
+                perms.push([selectedBlocks[0], selectedBlocks[1]]);
+                perms.push([selectedBlocks[1], selectedBlocks[0]]);
+            } else if (selectedBlocks.length === 3) {
+                // všechny permutace 3 prvků
+                const [a, b, c] = selectedBlocks;
+                perms.push([a, b, c]);
+                perms.push([a, c, b]);
+                perms.push([b, a, c]);
+                perms.push([b, c, a]);
+                perms.push([c, a, b]);
+                perms.push([c, b, a]);
+            }
+
+            const listDiv = document.getElementById('permutationsList');
+            listDiv.innerHTML = '';
+            perms.forEach((perm, idx) => {
+                const item = document.createElement('div');
+                item.className = 'perm-item';
+                const orderDiv = document.createElement('div');
+                orderDiv.className = 'order';
+                orderDiv.innerText = `permutace ${idx + 1}`;
+                item.appendChild(orderDiv);
+                perm.forEach(block => {
+                    const textDiv = document.createElement('div');
+                    textDiv.className = 'block-text';
+                    textDiv.innerHTML = `<span class="vrstva-${block.vrstva ? block.vrstva.toLowerCase() : 'filozoficky'}">${block.text}</span>`;
+                    item.appendChild(textDiv);
+                });
+                listDiv.appendChild(item);
+            });
+
+            document.getElementById('permutationsSection').style.display = 'block';
+        }
+
+        // Načti sample automaticky při startu
+        window.onload = function() {
+            // zkusíme načíst sample
+            fetch('../dataset/_sample/sample.json')
+                .then(r => r.json())
+                .then(data => {
+                    allBlocks = data;
+                    renderBlocks();
+                    document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+                })
+                .catch(() => {
+                    // ticho, necháme uživatele, aby vybral sám
+                });
+        };
+    </script>
+</body>
+</html>
