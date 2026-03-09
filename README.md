@@ -13,8 +13,8 @@
 - [multimediální bloky jevů 2_text](doma/dataset_2.md)
 
 
-- [multimediální bloky jevů 3](doma/dataset_3.json)
-- [multimediální bloky jevů 0_text](doma/dataset_0.md)
+- [multimediální bloky jevů 3](doma/dataset-3.json)
+- [multimediální bloky jevů 3_text](doma/dataset_3.md)
 
   
 - [multimediální bloky jevů 4](doma/dataset_4.json)
