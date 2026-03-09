@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtr vrstev | Dataset Chceš myš</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #fff;
+            color: #111;
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            font-weight: 300;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.3rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 { font-size: 2.2rem; }
+        h2 { font-size: 1.6rem; }
+        .toolbar {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #aaa;
+        }
+        select, button {
+            background: #fff;
+            border: 1px solid #333;
+            padding: 0.5rem 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+        button {
+            background: #eaeaea;
+            transition: 0.2s;
+        }
+        button:hover { background: #ccc; }
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .filter-tag {
+            background: #fff;
+            border: 1px solid #333;
+            padding: 0.3rem 0.8rem;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .filter-tag.active {
+            background: #333;
+            color: #fff;
+            border-color: #000;
+        }
+        .filter-tag:hover {
+            background: #ccc;
+        }
+        .stats {
+            font-size: 0.9rem;
+            color: #444;
+            margin-top: 1rem;
+        }
+        .results {
+            margin-top: 2rem;
+        }
+        .block-card {
+            border: 1px solid #444;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: #fafafa;
+        }
+        .block-card .vrstva {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        .block-card .text {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .block-card .pole {
+            font-size: 0.8rem;
+            color: #555;
+            font-family: 'Courier New', monospace;
+        }
+        /* typografické odlišení vrstev */
+        .vrstva-filozoficky { font-family: 'Georgia', serif; }
+        .vrstva-kulturni { font-family: 'Georgia', serif; font-style: italic; }
+        .vrstva-jazykovy { font-family: 'Arial', sans-serif; }
+        .vrstva-groteskni { font-family: 'Arial', sans-serif; font-style: italic; }
+        .vrstva-ironicky { font-family: 'Courier New', monospace; }
+        .vrstva-surrealisticky { font-family: 'Courier New', monospace; font-style: italic; }
+        .vrstva-absurdni { font-family: 'Times New Roman', serif; font-weight: bold; letter-spacing: 1px; }
+        .vrstva-psychologicky { font-weight: 300; font-family: 'Verdana', sans-serif; }
+        .vrstva-naivni { font-variant: small-caps; }
+        .vrstva-intro { font-weight: bold; font-size: 0.95rem; }
+        .vrstva-archetypalni { line-height: 2; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <h1>🎛️ Filtr podle vrstev</h1>
+    <p>Vyber jednu nebo více vrstev a zobraz pouze odpovídající bloky.</p>
+
+    <div class="toolbar">
+        <div>
+            <label for="dataset">Načíst dataset:</label>
+            <select id="dataset" onchange="loadDataset()"></select>
+            <button onclick="loadSample()">Načíst ukázku (_sample)</button>
+            <span id="blockCount">0 bloků načteno</span>
+        </div>
+        <div class="filter-section" id="filterTags"></div>
+        <div class="stats" id="stats"></div>
+    </div>
+
+    <div class="results" id="results"></div>
+
+    <script>
+        let allBlocks = [];
+        let activeFilters = [];
+
+        const VRSTVY = [
+            'filozofický', 'kulturní', 'jazykový', 'groteskní', 'ironický',
+            'surrealistický', 'absurdní', 'psychologický', 'naivní', 'intro', 'archetypální'
+        ];
+
+        async function loadDataset() {
+            const select = document.getElementById('dataset');
+            const path = select.value;
+            if (!path) return;
+            try {
+                const response = await fetch(path);
+                const data = await response.json();
+                allBlocks = data;
+                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+                renderFilterTags();
+                filter();
+            } catch (e) {
+                alert('Nepodařilo se načíst dataset: ' + e);
+            }
+        }
+
+        async function loadSample() {
+            try {
+                const response = await fetch('../dataset/_sample/sample.json');
+                const data = await response.json();
+                allBlocks = data;
+                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+                renderFilterTags();
+                filter();
+            } catch (e) {
+                alert('Nepodařilo se načíst ukázku.');
+            }
+        }
+
+        function renderFilterTags() {
+            const container = document.getElementById('filterTags');
+            container.innerHTML = '';
+
+            VRSTVY.forEach(vrstva => {
+                const tag = document.createElement('span');
+                tag.className = `filter-tag ${activeFilters.includes(vrstva) ? 'active' : ''}`;
+                tag.innerText = vrstva;
+                tag.onclick = () => toggleFilter(vrstva);
+                container.appendChild(tag);
+            });
+
+            // tlačítko pro reset
+            const reset = document.createElement('span');
+            reset.className = 'filter-tag';
+            reset.innerText = '✕ vymazat vše';
+            reset.onclick = () => {
+                activeFilters = [];
+                renderFilterTags();
+                filter();
+            };
+            container.appendChild(reset);
+        }
+
+        function toggleFilter(vrstva) {
+            if (activeFilters.includes(vrstva)) {
+                activeFilters = activeFilters.filter(v => v !== vrstva);
+            } else {
+                activeFilters.push(vrstva);
+            }
+            renderFilterTags();
+            filter();
+        }
+
+        function filter() {
+            let filtered;
+            if (activeFilters.length === 0) {
+                filtered = allBlocks;
+            } else {
+                filtered = allBlocks.filter(block => {
+                    const vrstva = (block.vrstva || '').toLowerCase();
+                    return activeFilters.some(af => af.toLowerCase() === vrstva);
+                });
+            }
+
+            renderResults(filtered);
+            document.getElementById('stats').innerText =
+                `Zobrazeno ${filtered.length} bloků z ${allBlocks.length} (aktivní filtry: ${activeFilters.join(', ') || 'žádné'}).`;
+        }
+
+        function renderResults(blocks) {
+            const container = document.getElementById('results');
+            container.innerHTML = '';
+
+            blocks.forEach(block => {
+                const card = document.createElement('div');
+                card.className = 'block-card';
+
+                const vrstvaDiv = document.createElement('div');
+                vrstvaDiv.className = `vrstva vrstva-${(block.vrstva || 'filozoficky').toLowerCase()}`;
+                vrstvaDiv.innerText = block.vrstva || 'neurčeno';
+
+                const textDiv = document.createElement('div');
+                textDiv.className = 'text';
+                textDiv.innerText = block.text;
+
+                const poleDiv = document.createElement('div');
+                poleDiv.className = 'pole';
+                poleDiv.innerText = block.pole ? 'pole: ' + block.pole.join(', ') : '';
+
+                card.appendChild(vrstvaDiv);
+                card.appendChild(textDiv);
+                if (block.pole) card.appendChild(poleDiv);
+                container.appendChild(card);
+            });
+
+            if (blocks.length === 0) {
+                container.innerHTML = '<p>Žádné bloky neodpovídají zvoleným filtrům.</p>';
+            }
+        }
+
+        window.onload = function() {
+            loadSample();
+        };
+    </script>
+</body>
+</html>
