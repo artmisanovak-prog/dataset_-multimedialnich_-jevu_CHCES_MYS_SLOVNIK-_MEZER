@@ -8,5 +8,5 @@ Je určen pro profesionální uživatele, kteří chtějí pracovat s celým sys
 
 ---
 
-**Počet bloků:** ~500  
+**Aktuální počet bloků:** 36 + 146 + 67 + 112 = 361  
 **Doporučené využití:** rozsáhlé projekty, AI trénink, výzkum, komplexní multimediální instalace.
