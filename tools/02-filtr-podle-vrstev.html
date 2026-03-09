@@ -116,9 +116,8 @@
 
     <div class="toolbar">
         <div>
-            <label for="dataset">Načíst dataset:</label>
-            <select id="dataset" onchange="loadDataset()"></select>
-            <button onclick="loadSample()">Načíst ukázku (_sample)</button>
+            <label for="datasetSelect">Vyber dataset:</label>
+            <select id="datasetSelect" style="min-width: 250px;"></select>
             <span id="blockCount">0 bloků načteno</span>
         </div>
         <div class="filter-section" id="filterTags"></div>
@@ -128,56 +127,81 @@
     <div class="results" id="results"></div>
 
     <script>
+        // Data a stav
         let allBlocks = [];
         let activeFilters = [];
 
+        // Seznam vrstev (stejný jako v README)
         const VRSTVY = [
             'filozofický', 'kulturní', 'jazykový', 'groteskní', 'ironický',
             'surrealistický', 'absurdní', 'psychologický', 'naivní', 'intro', 'archetypální'
         ];
 
-        async function loadDataset() {
-            const select = document.getElementById('dataset');
-            const path = select.value;
-            if (!path) return;
+        // Elementy
+        const datasetSelect = document.getElementById('datasetSelect');
+        const filterTagsDiv = document.getElementById('filterTags');
+        const statsDiv = document.getElementById('stats');
+        const resultsDiv = document.getElementById('results');
+        const blockCountSpan = document.getElementById('blockCount');
+
+        // Načtení manifestu
+        async function loadManifest() {
             try {
-                const response = await fetch(path);
-                const data = await response.json();
-                allBlocks = data;
-                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
-                renderFilterTags();
-                filter();
+                const response = await fetch('../dataset/manifest.json');
+                if (!response.ok) throw new Error('Manifest nenalezen');
+                const manifest = await response.json();
+                
+                datasetSelect.innerHTML = '';
+                manifest.datasets.forEach(ds => {
+                    const option = document.createElement('option');
+                    option.value = ds.file;
+                    option.textContent = ds.name;
+                    datasetSelect.appendChild(option);
+                });
+
+                if (manifest.datasets.length > 0) {
+                    loadDataset(manifest.datasets[0].file);
+                }
             } catch (e) {
-                alert('Nepodařilo se načíst dataset: ' + e);
+                console.error('Chyba při načítání manifestu:', e);
+                statsDiv.innerText = 'Nepodařilo se načíst manifest. Zkus načíst ukázku.';
+                datasetSelect.innerHTML = '<option value="_sample/sample.json">Ukázka zdarma (ručně)</option>';
+                loadDataset('_sample/sample.json');
             }
         }
 
-        async function loadSample() {
+        // Načtení datasetu
+        async function loadDataset(file) {
             try {
-                const response = await fetch('../dataset/_sample/sample.json');
+                const response = await fetch('../dataset/' + file);
+                if (!response.ok) throw new Error('Soubor nenalezen');
                 const data = await response.json();
                 allBlocks = data;
-                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+                blockCountSpan.innerText = `${allBlocks.length} bloků načteno`;
+                activeFilters = [];
                 renderFilterTags();
                 filter();
             } catch (e) {
-                alert('Nepodařilo se načíst ukázku.');
+                alert('Nepodařilo se načíst dataset: ' + file);
+                allBlocks = [];
+                blockCountSpan.innerText = '0 bloků načteno';
+                resultsDiv.innerHTML = '';
             }
         }
 
+        // Vykreslení tlačítek filtrů
         function renderFilterTags() {
-            const container = document.getElementById('filterTags');
-            container.innerHTML = '';
+            filterTagsDiv.innerHTML = '';
 
             VRSTVY.forEach(vrstva => {
                 const tag = document.createElement('span');
                 tag.className = `filter-tag ${activeFilters.includes(vrstva) ? 'active' : ''}`;
                 tag.innerText = vrstva;
                 tag.onclick = () => toggleFilter(vrstva);
-                container.appendChild(tag);
+                filterTagsDiv.appendChild(tag);
             });
 
-            // tlačítko pro reset
+            // reset tlačítko
             const reset = document.createElement('span');
             reset.className = 'filter-tag';
             reset.innerText = '✕ vymazat vše';
@@ -186,9 +210,10 @@
                 renderFilterTags();
                 filter();
             };
-            container.appendChild(reset);
+            filterTagsDiv.appendChild(reset);
         }
 
+        // Přepnutí filtru
         function toggleFilter(vrstva) {
             if (activeFilters.includes(vrstva)) {
                 activeFilters = activeFilters.filter(v => v !== vrstva);
@@ -199,33 +224,34 @@
             filter();
         }
 
+        // Aplikace filtrů
         function filter() {
             let filtered;
             if (activeFilters.length === 0) {
                 filtered = allBlocks;
             } else {
                 filtered = allBlocks.filter(block => {
-                    const vrstva = (block.vrstva || '').toLowerCase();
+                    const vrstva = (block.vrstva || block.type || '').toLowerCase();
                     return activeFilters.some(af => af.toLowerCase() === vrstva);
                 });
             }
 
             renderResults(filtered);
-            document.getElementById('stats').innerText =
+            statsDiv.innerText =
                 `Zobrazeno ${filtered.length} bloků z ${allBlocks.length} (aktivní filtry: ${activeFilters.join(', ') || 'žádné'}).`;
         }
 
+        // Zobrazení výsledků
         function renderResults(blocks) {
-            const container = document.getElementById('results');
-            container.innerHTML = '';
+            resultsDiv.innerHTML = '';
 
             blocks.forEach(block => {
                 const card = document.createElement('div');
                 card.className = 'block-card';
 
                 const vrstvaDiv = document.createElement('div');
-                vrstvaDiv.className = `vrstva vrstva-${(block.vrstva || 'filozoficky').toLowerCase()}`;
-                vrstvaDiv.innerText = block.vrstva || 'neurčeno';
+                vrstvaDiv.className = `vrstva vrstva-${(block.vrstva || block.type || 'filozoficky').toLowerCase()}`;
+                vrstvaDiv.innerText = block.vrstva || block.type || 'neurčeno';
 
                 const textDiv = document.createElement('div');
                 textDiv.className = 'text';
@@ -233,22 +259,26 @@
 
                 const poleDiv = document.createElement('div');
                 poleDiv.className = 'pole';
-                poleDiv.innerText = block.pole ? 'pole: ' + block.pole.join(', ') : '';
+                poleDiv.innerText = block.fields ? 'pole: ' + block.fields.join(', ') : '';
 
                 card.appendChild(vrstvaDiv);
                 card.appendChild(textDiv);
-                if (block.pole) card.appendChild(poleDiv);
-                container.appendChild(card);
+                if (block.fields) card.appendChild(poleDiv);
+                resultsDiv.appendChild(card);
             });
 
             if (blocks.length === 0) {
-                container.innerHTML = '<p>Žádné bloky neodpovídají zvoleným filtrům.</p>';
+                resultsDiv.innerHTML = '<p>Žádné bloky neodpovídají zvoleným filtrům.</p>';
             }
         }
 
-        window.onload = function() {
-            loadSample();
-        };
+        // Event listener pro změnu datasetu
+        datasetSelect.addEventListener('change', (e) => {
+            loadDataset(e.target.value);
+        });
+
+        // Start
+        window.onload = loadManifest;
     </script>
 </body>
 </html>
