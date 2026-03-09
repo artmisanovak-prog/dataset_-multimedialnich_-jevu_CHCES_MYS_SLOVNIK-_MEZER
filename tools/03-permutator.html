@@ -132,11 +132,10 @@
 
     <div class="toolbar">
         <div class="dataset-selector">
-            <label for="dataset">Načíst dataset:</label>
-            <select id="dataset" onchange="loadDataset()"></select>
+            <label for="datasetSelect">Vyber dataset:</label>
+            <select id="datasetSelect" style="min-width: 250px;"></select>
+            <span id="blockCount">0 bloků načteno</span>
         </div>
-        <button onclick="loadSample()">Načíst ukázku (_sample)</button>
-        <span style="margin-left: 1rem;" id="blockCount">0 bloků načteno</span>
     </div>
 
     <div class="block-panel">
@@ -161,53 +160,71 @@
         let allBlocks = [];
         let selectedBlocks = [];
 
-        // Načtení datasetů
-        async function loadDataset() {
-            const select = document.getElementById('dataset');
-            const path = select.value; // např. "../dataset/_sample/sample.json"
-            if (!path) return;
+        // Elementy
+        const datasetSelect = document.getElementById('datasetSelect');
+        const blocksContainer = document.getElementById('blocksContainer');
+        const selectedContainer = document.getElementById('selectedContainer');
+        const permutationsSection = document.getElementById('permutationsSection');
+        const permutationsList = document.getElementById('permutationsList');
+        const blockCountSpan = document.getElementById('blockCount');
+
+        // Načtení manifestu
+        async function loadManifest() {
             try {
-                const response = await fetch(path);
-                const data = await response.json();
-                allBlocks = data;
-                selectedBlocks = [];
-                renderBlocks();
-                renderSelected();
-                document.getElementById('permutationsSection').style.display = 'none';
-                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+                const response = await fetch('../dataset/manifest.json');
+                if (!response.ok) throw new Error('Manifest nenalezen');
+                const manifest = await response.json();
+                
+                datasetSelect.innerHTML = '';
+                manifest.datasets.forEach(ds => {
+                    const option = document.createElement('option');
+                    option.value = ds.file;
+                    option.textContent = ds.name;
+                    datasetSelect.appendChild(option);
+                });
+
+                if (manifest.datasets.length > 0) {
+                    loadDataset(manifest.datasets[0].file);
+                }
             } catch (e) {
-                alert('Nepodařilo se načíst dataset: ' + e);
+                console.error('Chyba při načítání manifestu:', e);
+                datasetSelect.innerHTML = '<option value="_sample/sample.json">Ukázka zdarma (ručně)</option>';
+                loadDataset('_sample/sample.json');
             }
         }
 
-        // Pro ukázku natvrdo načteme sample (pokud nefunguje select, dáme tlačítko)
-        async function loadSample() {
+        // Načtení datasetu
+        async function loadDataset(file) {
             try {
-                const response = await fetch('../dataset/_sample/sample.json');
+                const response = await fetch('../dataset/' + file);
+                if (!response.ok) throw new Error('Soubor nenalezen');
                 const data = await response.json();
                 allBlocks = data;
                 selectedBlocks = [];
+                blockCountSpan.innerText = `${allBlocks.length} bloků načteno`;
                 renderBlocks();
                 renderSelected();
-                document.getElementById('permutationsSection').style.display = 'none';
-                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
+                permutationsSection.style.display = 'none';
             } catch (e) {
-                alert('Nepodařilo se načíst ukázku. Zkontroluj cestu ../dataset/_sample/sample.json');
+                alert('Nepodařilo se načíst dataset: ' + file);
+                allBlocks = [];
+                blockCountSpan.innerText = '0 bloků načteno';
+                blocksContainer.innerHTML = '';
+                selectedContainer.innerHTML = '';
             }
         }
 
         // Vykreslení seznamu všech bloků
         function renderBlocks() {
-            const container = document.getElementById('blocksContainer');
-            container.innerHTML = '';
+            blocksContainer.innerHTML = '';
             allBlocks.forEach((block, idx) => {
                 const card = document.createElement('div');
                 card.className = `block-card ${selectedBlocks.includes(block) ? 'selected' : ''}`;
                 card.onclick = () => selectBlock(block);
 
                 const vrstvaDiv = document.createElement('div');
-                vrstvaDiv.className = `vrstva vrstva-${block.vrstva ? block.vrstva.toLowerCase() : 'filozoficky'}`;
-                vrstvaDiv.innerText = block.vrstva || 'neurčeno';
+                vrstvaDiv.className = `vrstva vrstva-${(block.vrstva || block.type || 'filozoficky').toLowerCase()}`;
+                vrstvaDiv.innerText = block.vrstva || block.type || 'neurčeno';
 
                 const textDiv = document.createElement('div');
                 textDiv.className = 'text';
@@ -215,14 +232,13 @@
 
                 card.appendChild(vrstvaDiv);
                 card.appendChild(textDiv);
-                container.appendChild(card);
+                blocksContainer.appendChild(card);
             });
         }
 
         // Výběr bloku
         function selectBlock(block) {
             if (selectedBlocks.includes(block)) {
-                // odstraň
                 selectedBlocks = selectedBlocks.filter(b => b !== block);
             } else {
                 if (selectedBlocks.length >= 3) {
@@ -236,22 +252,21 @@
             if (selectedBlocks.length >= 2) {
                 generatePermutations();
             } else {
-                document.getElementById('permutationsSection').style.display = 'none';
+                permutationsSection.style.display = 'none';
             }
         }
 
         // Vykreslení vybraných
         function renderSelected() {
-            const container = document.getElementById('selectedContainer');
-            container.innerHTML = '';
+            selectedContainer.innerHTML = '';
             selectedBlocks.forEach(block => {
                 const card = document.createElement('div');
                 card.className = 'block-card';
-                card.onclick = () => selectBlock(block); // kliknutím odebere
+                card.onclick = () => selectBlock(block);
 
                 const vrstvaDiv = document.createElement('div');
-                vrstvaDiv.className = `vrstva vrstva-${block.vrstva ? block.vrstva.toLowerCase() : 'filozoficky'}`;
-                vrstvaDiv.innerText = block.vrstva || 'neurčeno';
+                vrstvaDiv.className = `vrstva vrstva-${(block.vrstva || block.type || 'filozoficky').toLowerCase()}`;
+                vrstvaDiv.innerText = block.vrstva || block.type || 'neurčeno';
 
                 const textDiv = document.createElement('div');
                 textDiv.className = 'text';
@@ -259,7 +274,7 @@
 
                 card.appendChild(vrstvaDiv);
                 card.appendChild(textDiv);
-                container.appendChild(card);
+                selectedContainer.appendChild(card);
             });
         }
 
@@ -267,7 +282,7 @@
             selectedBlocks = [];
             renderBlocks();
             renderSelected();
-            document.getElementById('permutationsSection').style.display = 'none';
+            permutationsSection.style.display = 'none';
         }
 
         // Generování permutací (pro 2 nebo 3 bloky)
@@ -278,7 +293,6 @@
                 perms.push([selectedBlocks[0], selectedBlocks[1]]);
                 perms.push([selectedBlocks[1], selectedBlocks[0]]);
             } else if (selectedBlocks.length === 3) {
-                // všechny permutace 3 prvků
                 const [a, b, c] = selectedBlocks;
                 perms.push([a, b, c]);
                 perms.push([a, c, b]);
@@ -288,8 +302,7 @@
                 perms.push([c, b, a]);
             }
 
-            const listDiv = document.getElementById('permutationsList');
-            listDiv.innerHTML = '';
+            permutationsList.innerHTML = '';
             perms.forEach((perm, idx) => {
                 const item = document.createElement('div');
                 item.className = 'perm-item';
@@ -300,29 +313,22 @@
                 perm.forEach(block => {
                     const textDiv = document.createElement('div');
                     textDiv.className = 'block-text';
-                    textDiv.innerHTML = `<span class="vrstva-${block.vrstva ? block.vrstva.toLowerCase() : 'filozoficky'}">${block.text}</span>`;
+                    textDiv.innerHTML = `<span class="vrstva-${(block.vrstva || block.type || 'filozoficky').toLowerCase()}">${block.text}</span>`;
                     item.appendChild(textDiv);
                 });
-                listDiv.appendChild(item);
+                permutationsList.appendChild(item);
             });
 
-            document.getElementById('permutationsSection').style.display = 'block';
+            permutationsSection.style.display = 'block';
         }
 
-        // Načti sample automaticky při startu
-        window.onload = function() {
-            // zkusíme načíst sample
-            fetch('../dataset/_sample/sample.json')
-                .then(r => r.json())
-                .then(data => {
-                    allBlocks = data;
-                    renderBlocks();
-                    document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
-                })
-                .catch(() => {
-                    // ticho, necháme uživatele, aby vybral sám
-                });
-        };
+        // Event listener pro změnu datasetu
+        datasetSelect.addEventListener('change', (e) => {
+            loadDataset(e.target.value);
+        });
+
+        // Start
+        window.onload = loadManifest;
     </script>
 </body>
 </html>
