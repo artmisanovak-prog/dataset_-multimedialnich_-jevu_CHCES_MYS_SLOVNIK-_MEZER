@@ -1,26 +1,3 @@
-🧩 Tematické balíčky – proč si je pořídit
-
-Balíček Zaměření Počet bloků Basic Extended
-🎭 Základ – Zvířecí archy Prvních 50 bloků napříč všemi vrstvami. Ideální pro první seznámení a menší projekty. 50 190 € 390 €
-🌀 Jazykové vrstvy Bloky zaměřené na jazyk, řeč, rytmus a metaforu (vrstvy jazykový, absurdní, ironický). Pro textaře, básníky, zvukové experimenty. 70 290 € 490 €
-🧠 Psychologické portréty Bloky zkoumající stavy mysli, emoce, vztahy (psychologický, intro, archetypální). Pro scénáristy, herní designéry, performery. 80 340 € 590 €
-🌌 Surrealistický atlas Surrealistické, groteskní a absurdní bloky plné obrazů a snových logik. Pro vizuální umělce, animátory, tvůrce instalací. 90 390 € 690 €
-🏛️ Kulturní kódy Bloky reflektující kulturní symboly, mýty, stereotypy a společenské jevy (kulturní, naivní, filozofický). Pro konceptuální umění, výzkum, kritiku. 100 440 € 790 €
-🕸️ Kompletní síť Všechny bloky dohromady (cca 500). Nejvyšší hodnota – nekonečné kombinace a permutace. 500 990 € 1890 €
-
-Každý balíček je samostatný JSON soubor, který po rozbalení do složky /dataset okamžitě funguje se všemi nástroji. Uživatel si může balíčky postupně dokupovat a rozšiřovat svůj „slovník mezer“.
-
----
-
-🎁 Ukázka zdarma – _sample
-
-Soubor dataset/_sample/sample.json obsahuje 20 bloků napříč tématy – aby si uživatel mohl vyzkoušet všechny nástroje a uviděl, jak systém funguje. Je to pozvánka do světa, ne placená ochutnávka.
-
----
-
-📜 Kompletní README (markdown, připravené ke zkopírování)
-
-```markdown
 # 📦 Dataset Fenoménů a Multimediálních Jevů  
 ## „Chceš myš“ – Slovník Mezer  
 ### Kurátorovaný generativní systém významových bloků v češtině  
