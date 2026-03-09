@@ -108,9 +108,8 @@
 
     <div class="toolbar">
         <div>
-            <label for="dataset">Načíst dataset:</label>
-            <select id="dataset" onchange="loadDataset()"></select>
-            <button onclick="loadSample()">Načíst ukázku (_sample)</button>
+            <label for="datasetSelect">Vyber dataset:</label>
+            <select id="datasetSelect" style="min-width: 250px;"></select>
             <span id="blockCount">0 bloků načteno</span>
         </div>
         <div class="search-box">
@@ -128,50 +127,80 @@
     <div class="results" id="results"></div>
 
     <script>
+        // Data
         let allBlocks = [];
 
-        async function loadDataset() {
-            const select = document.getElementById('dataset');
-            const path = select.value;
-            if (!path) return;
+        // Elementy
+        const datasetSelect = document.getElementById('datasetSelect');
+        const searchInput = document.getElementById('searchInput');
+        const caseSensitiveCheck = document.getElementById('caseSensitive');
+        const searchInFieldsCheck = document.getElementById('searchInFields');
+        const blockCountSpan = document.getElementById('blockCount');
+        const statsDiv = document.getElementById('stats');
+        const resultsDiv = document.getElementById('results');
+
+        // Načtení manifestu
+        async function loadManifest() {
             try {
-                const response = await fetch(path);
-                const data = await response.json();
-                allBlocks = data;
-                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
-                search();
+                const response = await fetch('../dataset/manifest.json');
+                if (!response.ok) throw new Error('Manifest nenalezen');
+                const manifest = await response.json();
+                
+                // Naplnění selectu
+                datasetSelect.innerHTML = '';
+                manifest.datasets.forEach(ds => {
+                    const option = document.createElement('option');
+                    option.value = ds.file;
+                    option.textContent = ds.name;
+                    datasetSelect.appendChild(option);
+                });
+
+                // Načtení prvního datasetu
+                if (manifest.datasets.length > 0) {
+                    loadDataset(manifest.datasets[0].file);
+                }
             } catch (e) {
-                alert('Nepodařilo se načíst dataset: ' + e);
+                console.error('Chyba při načítání manifestu:', e);
+                statsDiv.innerText = 'Nepodařilo se načíst manifest. Zkus načíst ukázku.';
+                // Přidáme alespoň možnost načíst ukázku ručně
+                datasetSelect.innerHTML = '<option value="_sample/sample.json">Ukázka zdarma (ručně)</option>';
+                loadDataset('_sample/sample.json');
             }
         }
 
-        async function loadSample() {
+        // Načtení konkrétního datasetu
+        async function loadDataset(file) {
             try {
-                const response = await fetch('../dataset/_sample/sample.json');
+                const response = await fetch('../dataset/' + file);
+                if (!response.ok) throw new Error('Soubor nenalezen');
                 const data = await response.json();
                 allBlocks = data;
-                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků načteno`;
-                search();
+                blockCountSpan.innerText = `${allBlocks.length} bloků načteno`;
+                search(); // zobraz vše
             } catch (e) {
-                alert('Nepodařilo se načíst ukázku. Zkontroluj cestu ../dataset/_sample/sample.json');
+                alert('Nepodařilo se načíst dataset: ' + file);
+                allBlocks = [];
+                blockCountSpan.innerText = '0 bloků načteno';
+                resultsDiv.innerHTML = '';
             }
         }
 
+        // Vyhledávání
         function search() {
-            const query = document.getElementById('searchInput').value.trim();
-            const caseSensitive = document.getElementById('caseSensitive').checked;
-            const searchInFields = document.getElementById('searchInFields').checked;
+            const query = searchInput.value.trim();
+            const caseSensitive = caseSensitiveCheck.checked;
+            const searchInFields = searchInFieldsCheck.checked;
 
             if (!query) {
                 renderResults(allBlocks);
-                document.getElementById('stats').innerText = `Zobrazeno všech ${allBlocks.length} bloků.`;
+                statsDiv.innerText = `Zobrazeno všech ${allBlocks.length} bloků.`;
                 return;
             }
 
             const filtered = allBlocks.filter(block => {
                 let haystack = block.text;
-                if (searchInFields && block.pole && Array.isArray(block.pole)) {
-                    haystack += ' ' + block.pole.join(' ');
+                if (searchInFields && block.fields && Array.isArray(block.fields)) {
+                    haystack += ' ' + block.fields.join(' ');
                 }
                 if (!caseSensitive) {
                     return haystack.toLowerCase().includes(query.toLowerCase());
@@ -181,20 +210,20 @@
             });
 
             renderResults(filtered);
-            document.getElementById('stats').innerText = `Nalezeno ${filtered.length} bloků z ${allBlocks.length}.`;
+            statsDiv.innerText = `Nalezeno ${filtered.length} bloků z ${allBlocks.length}.`;
         }
 
+        // Zobrazení výsledků
         function renderResults(blocks) {
-            const container = document.getElementById('results');
-            container.innerHTML = '';
+            resultsDiv.innerHTML = '';
 
             blocks.forEach(block => {
                 const card = document.createElement('div');
                 card.className = 'block-card';
 
                 const vrstvaDiv = document.createElement('div');
-                vrstvaDiv.className = `vrstva vrstva-${(block.vrstva || 'filozoficky').toLowerCase()}`;
-                vrstvaDiv.innerText = block.vrstva || 'neurčeno';
+                vrstvaDiv.className = `vrstva vrstva-${(block.vrstva || block.type || 'filozoficky').toLowerCase()}`;
+                vrstvaDiv.innerText = block.vrstva || block.type || 'neurčeno';
 
                 const textDiv = document.createElement('div');
                 textDiv.className = 'text';
@@ -202,22 +231,26 @@
 
                 const poleDiv = document.createElement('div');
                 poleDiv.className = 'pole';
-                poleDiv.innerText = block.pole ? 'pole: ' + block.pole.join(', ') : '';
+                poleDiv.innerText = block.fields ? 'pole: ' + block.fields.join(', ') : '';
 
                 card.appendChild(vrstvaDiv);
                 card.appendChild(textDiv);
-                if (block.pole) card.appendChild(poleDiv);
-                container.appendChild(card);
+                if (block.fields) card.appendChild(poleDiv);
+                resultsDiv.appendChild(card);
             });
 
             if (blocks.length === 0) {
-                container.innerHTML = '<p>Žádné bloky neodpovídají hledání.</p>';
+                resultsDiv.innerHTML = '<p>Žádné bloky neodpovídají hledání.</p>';
             }
         }
 
-        window.onload = function() {
-            loadSample();
-        };
+        // Event listener pro změnu datasetu
+        datasetSelect.addEventListener('change', (e) => {
+            loadDataset(e.target.value);
+        });
+
+        // Spuštění po načtení stránky
+        window.onload = loadManifest;
     </script>
 </body>
 </html>
