@@ -20,8 +20,9 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
+            align-items: center;
         }
-        button, select {
+        select, button {
             background: #fff;
             border: 1px solid #333;
             padding: 0.4rem 0.8rem;
@@ -72,10 +73,13 @@
 </head>
 <body>
     <div id="toolbar">
-        <button onclick="loadSample()">Načíst ukázku (_sample)</button>
+        <div>
+            <label for="datasetSelect">Dataset:</label>
+            <select id="datasetSelect"></select>
+        </div>
         <span id="blockCount">0 bloků</span>
         <button onclick="resetSimulation()">Reset pozic</button>
-        <button onclick="toggleDrag()" id="dragBtn">🔒 Tahání uzamčeno</button>
+        <button onclick="toggleDrag()" id="dragBtn">🔒 Tahání zamčeno</button>
     </div>
     <div id="canvasContainer">
         <canvas id="graphCanvas" width="1000" height="700"></canvas>
@@ -85,30 +89,61 @@
 
     <script>
         let allBlocks = [];
-        let nodes = [];        // { id, text, vrstva, x, y, vx, vy, fixed }
-        let edges = [];        // { from, to, weight }
+        let nodes = [];
+        let edges = [];
         let selectedNode = null;
         let dragging = false;
         let dragNode = null;
+        let dragEnabled = false;
         let mouseX, mouseY;
         let animationFrame;
         let ctx;
         const canvas = document.getElementById('graphCanvas');
         const W = 1000, H = 700;
-
-        // Nastavení canvasu
         ctx = canvas.getContext('2d');
 
-        // Načtení ukázky
-        async function loadSample() {
+        const datasetSelect = document.getElementById('datasetSelect');
+        const blockCountSpan = document.getElementById('blockCount');
+        const dragBtn = document.getElementById('dragBtn');
+
+        // Načtení manifestu
+        async function loadManifest() {
             try {
-                const res = await fetch('../dataset/_sample/sample.json');
-                const data = await res.json();
-                allBlocks = data;
-                buildGraph();
-                document.getElementById('blockCount').innerText = `${allBlocks.length} bloků`;
+                const response = await fetch('../dataset/manifest.json');
+                if (!response.ok) throw new Error('Manifest nenalezen');
+                const manifest = await response.json();
+                
+                datasetSelect.innerHTML = '';
+                manifest.datasets.forEach(ds => {
+                    const option = document.createElement('option');
+                    option.value = ds.file;
+                    option.textContent = ds.name;
+                    datasetSelect.appendChild(option);
+                });
+
+                if (manifest.datasets.length > 0) {
+                    loadDataset(manifest.datasets[0].file);
+                }
             } catch (e) {
-                alert('Nepodařilo se načíst ukázku.');
+                console.error('Chyba při načítání manifestu:', e);
+                datasetSelect.innerHTML = '<option value="_sample/sample.json">Ukázka zdarma (ručně)</option>';
+                loadDataset('_sample/sample.json');
+            }
+        }
+
+        // Načtení datasetu
+        async function loadDataset(file) {
+            try {
+                const response = await fetch('../dataset/' + file);
+                if (!response.ok) throw new Error('Soubor nenalezen');
+                const data = await response.json();
+                allBlocks = data;
+                blockCountSpan.innerText = `${allBlocks.length} bloků`;
+                buildGraph();
+            } catch (e) {
+                alert('Nepodařilo se načíst dataset: ' + file);
+                allBlocks = [];
+                blockCountSpan.innerText = '0 bloků';
             }
         }
 
@@ -117,7 +152,7 @@
             nodes = allBlocks.map((block, idx) => ({
                 id: idx,
                 text: block.text,
-                vrstva: block.vrstva || 'filozofický',
+                vrstva: block.vrstva || block.type || 'filozofický',
                 x: Math.random() * W,
                 y: Math.random() * H,
                 vx: 0, vy: 0,
@@ -125,7 +160,6 @@
             }));
 
             edges = [];
-            // hrana pokud stejná vrstva
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i+1; j < nodes.length; j++) {
                     if (nodes[i].vrstva === nodes[j].vrstva) {
@@ -133,23 +167,20 @@
                     }
                 }
             }
-            // spustíme simulaci
             if (animationFrame) cancelAnimationFrame(animationFrame);
             simulate();
         }
 
-        // Fyzikální simulace (odpuzování, pružiny)
+        // Fyzikální simulace
         function simulate() {
-            const repulsion = 500; // síla odpuzování
-            const springLength = 150; // ideální délka hrany
+            const repulsion = 500;
+            const springLength = 150;
             const springStrength = 0.1;
             const dt = 0.1;
 
             function step() {
-                // reset sil
                 nodes.forEach(n => { n.ax = 0; n.ay = 0; });
 
-                // odpuzování všech uzlů
                 for (let i = 0; i < nodes.length; i++) {
                     for (let j = i+1; j < nodes.length; j++) {
                         let dx = nodes[i].x - nodes[j].x;
@@ -165,7 +196,6 @@
                     }
                 }
 
-                // pružiny podle hran
                 edges.forEach(e => {
                     let a = nodes[e.from];
                     let b = nodes[e.to];
@@ -181,18 +211,14 @@
                     b.ay -= fy;
                 });
 
-                // integrace
                 nodes.forEach(n => {
                     if (!n.fixed) {
                         n.vx += n.ax * dt;
                         n.vy += n.ay * dt;
-                        // tření
                         n.vx *= 0.95;
                         n.vy *= 0.95;
                         n.x += n.vx;
                         n.y += n.vy;
-
-                        // okraje
                         n.x = Math.max(20, Math.min(W-20, n.x));
                         n.y = Math.max(20, Math.min(H-20, n.y));
                     }
@@ -207,7 +233,6 @@
         function draw() {
             ctx.clearRect(0, 0, W, H);
 
-            // kreslíme hrany (šedé, různá tloušťka podle weight)
             edges.forEach(e => {
                 let a = nodes[e.from];
                 let b = nodes[e.to];
@@ -219,13 +244,11 @@
                 ctx.stroke();
             });
 
-            // kreslíme uzly (podle vrstvy různé tvary/stínování)
             nodes.forEach((n, i) => {
                 ctx.beginPath();
-                // tvar: kruh, čtverec, trojúhelník podle vrstvy
-                if (n.vrstva === 'filozofický') ctx.arc(n.x, n.y, 8, 0, 2*Math.PI);
-                else if (n.vrstva === 'kulturní') ctx.rect(n.x-8, n.y-8, 16, 16);
-                else if (n.vrstva === 'jazykový') {
+                if (n.vrstva.toLowerCase().includes('filozof')) ctx.arc(n.x, n.y, 8, 0, 2*Math.PI);
+                else if (n.vrstva.toLowerCase().includes('kulturn')) ctx.rect(n.x-8, n.y-8, 16, 16);
+                else if (n.vrstva.toLowerCase().includes('jazyk')) {
                     ctx.moveTo(n.x, n.y-10);
                     ctx.lineTo(n.x+10, n.y+5);
                     ctx.lineTo(n.x-10, n.y+5);
@@ -234,18 +257,16 @@
                     ctx.arc(n.x, n.y, 8, 0, 2*Math.PI);
                 }
 
-                // výplň podle vrstvy (odstíny šedi)
-                if (n.vrstva === 'absurdní') ctx.fillStyle = '#111';
-                else if (n.vrstva === 'ironický') ctx.fillStyle = '#333';
-                else if (n.vrstva === 'psychologický') ctx.fillStyle = '#666';
-                else if (n.vrstva === 'archetypální') ctx.fillStyle = '#999';
+                if (n.vrstva.toLowerCase().includes('absurd')) ctx.fillStyle = '#111';
+                else if (n.vrstva.toLowerCase().includes('iron')) ctx.fillStyle = '#333';
+                else if (n.vrstva.toLowerCase().includes('psycholog')) ctx.fillStyle = '#666';
+                else if (n.vrstva.toLowerCase().includes('archetyp')) ctx.fillStyle = '#999';
                 else ctx.fillStyle = '#ccc';
                 ctx.fill();
                 ctx.strokeStyle = '#000';
                 ctx.lineWidth = 1;
                 ctx.stroke();
 
-                // pokud je vybraný, zvýrazníme
                 if (selectedNode === i) {
                     ctx.beginPath();
                     ctx.arc(n.x, n.y, 12, 0, 2*Math.PI);
@@ -255,8 +276,6 @@
                 }
             });
 
-            // popisky (jen při najetí nebo pro vybraný)
-            // pro zjednodušení vypíšeme text u vybraného
             if (selectedNode !== null) {
                 let n = nodes[selectedNode];
                 ctx.font = '12px Georgia';
@@ -273,7 +292,6 @@
             mouseX = (e.clientX - rect.left) * scaleX;
             mouseY = (e.clientY - rect.top) * scaleY;
 
-            // hledáme uzel
             let minDist = 20;
             let hit = null;
             nodes.forEach((n, idx) => {
@@ -313,10 +331,9 @@
             }
         });
 
-        let dragEnabled = false;
         function toggleDrag() {
             dragEnabled = !dragEnabled;
-            document.getElementById('dragBtn').innerText = dragEnabled ? '🔓 Tahání povoleno' : '🔒 Tahání zamčeno';
+            dragBtn.innerText = dragEnabled ? '🔓 Tahání povoleno' : '🔒 Tahání zamčeno';
         }
 
         function resetSimulation() {
@@ -328,7 +345,11 @@
             });
         }
 
-        window.onload = loadSample;
+        datasetSelect.addEventListener('change', (e) => {
+            loadDataset(e.target.value);
+        });
+
+        window.onload = loadManifest;
     </script>
 </body>
 </html>
