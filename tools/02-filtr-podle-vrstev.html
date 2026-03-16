@@ -173,7 +173,7 @@
         // Načtení datasetu
         async function loadDataset(file) {
             try {
-                const response = await fetch('../dataset/' + file);
+                const response = await fetch('dataset/' + file);
                 if (!response.ok) throw new Error('Soubor nenalezen');
                 const data = await response.json();
                 allBlocks = data;
