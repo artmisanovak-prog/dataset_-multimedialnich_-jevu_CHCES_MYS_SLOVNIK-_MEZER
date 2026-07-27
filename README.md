@@ -111,7 +111,7 @@ Všechny nástroje jsou **samostatné HTML soubory**, černobílé, bez knihoven
 | **🎛️ Filtr podle vrstev** | [`02-filtr-podle-vrstev.html`](./tools/02-filtr-podle-vrstev.html) | Zobrazí jen bloky vybraných vrstev (klikáním na tagy). |
 | **🔄 Permutátor** | [`03-permutator.html`](./tools/03-permutator.html) | Vezme 2–3 vybrané bloky a zobrazí všech 6 permutací jejich pořadí. Každá permutace odhalí nový význam. |
 | **🧩 Kombinátor** | [`04-kombinator.html`](./tools/04-kombinator.html) | Vybereš 2–3 bloky – nástroj analyzuje jejich společné rysy a vygeneruje hotový multimediální koncept (film, hra, instalace, zvuk). |
-| **🕸️ Pavouk** | [`05-pavouk.html`](./tools/05-pavouk.html) | Vizualizuje všechny bloky jako síť. Uzly = bloky, hrany = společné vrstvy. Můžeš uzly tahat, přibližovat, objevovat souvislosti. |
+| **🕸️ Pavouk** | (`05_pavouk.html`)[./tools/05_pavouk.html] | Vizualizuje všechny bloky jako síť. Uzly = bloky, hrany = společné vrstvy. Můžeš uzly tahat, přibližovat, objevovat souvislosti. |
 
 Všechny nástroje načítají data automaticky ze složky `/dataset`. Stačí rozbalit zakoupený balíček a nástroje ho hned vidí.
 
@@ -119,7 +119,7 @@ Všechny nástroje načítají data automaticky ze složky `/dataset`. Stačí r
 
 ## 🎁 Ukázka zdarma – `_sample`
 
-Soubor [`dataset/_sample/sample.json`](./dataset/_sample/sample.json) obsahuje **20 ukázkových bloků** napříč všemi tématy. Můžeš si s nimi bezplatně vyzkoušet všechny nástroje – vyhledávat, filtrovat, permutovat, kombinovat i vizualizovat. Žádná registrace, žádné omezení.
+Soubor [`dataset/sample/sample.json`](./dataset/sample/sample.json) obsahuje **20 ukázkových bloků** napříč všemi tématy. Můžeš si s nimi bezplatně vyzkoušet všechny nástroje – vyhledávat, filtrovat, permutovat, kombinovat i vizualizovat. Žádná registrace, žádné omezení.
 
 Ukázkové bloky jsou vybrané tak, aby reprezentovaly různé vrstvy a typy – uvidíš, jak systém funguje, a snadněji se rozhodneš, který tematický balíček ti nejvíc sedí.
 
@@ -131,16 +131,16 @@ Každý balíček je **samostatný JSON soubor** s unikátním zaměřením. Po 
 
 | Balíček | Zaměření | Počet bloků | Basic | Extended |
 |---------|----------|-------------|-------|----------|
-| **🎭 Základ – Zvířecí archy** | Prvních 50 bloků napříč všemi vrstvami. Ideální pro první seznámení a menší projekty. | 50 | 190 € | 390 € |(packs/01_zvireci_archy.json)(doma/packs/01_zvireci_archy/README.md)
+| **🎭 Základ – Zvířecí archy** | Prvních 50 bloků napříč všemi vrstvami. Ideální pro první seznámení a menší projekty. | 50 | 190 € | 390 € |(zvireci_archetypy)[packs/01_zvireci_archetypy.json](doma/packs/01_zvireci_archetypy/README.md)
 | **🌀 Jazykové vrstvy** | Bloky zaměřené na jazyk, řeč, rytmus a metaforu (vrstvy jazykový, absurdní, ironický). Pro textaře, básníky, zvukové experimenty. | 70 | 290 € | 490 € |(doma/packs/02_jazykove_vrstvy/README.md)
-| **🧠 Psychologické portréty** | Bloky zkoumající stavy mysli, emoce, vztahy (psychologický, intro, archetypální). Pro scénáristy, herní designéry, performery. | 80 | 340 € | 590 € |(doma/pack/03_psychologicke_portrety/psychologie-stavy.json)
-- [psychologie-vztahy](doma/packs/04_surrealisticky_archiv.json)
-| **🌌 Surrealistický atlas** | Surrealistické, groteskní a absurdní bloky plné obrazů a snových logik. Pro vizuální umělce, animátory, tvůrce instalací. | 90 | 390 € | 690 € |(doma/packs/04_surrealisticky_atlas/README.md)
+| **🧠 Psychologické portréty** | Bloky zkoumající stavy mysli, emoce, vztahy (psychologický, intro, archetypální). Pro scénáristy, herní designéry, performery. | 80 | 340 € | 590 € |(psychologicke portréty - stavy)[pack/03_psychologicke_portrety/psychologie_stavy.json]
+- (psychologie-vztahy)[packs/04_surrealisticky_archiv.json]
+| **🌌 Surrealistický atlas** | Surrealistické, groteskní a absurdní bloky plné obrazů a snových logik. Pro vizuální umělce, animátory, tvůrce instalací. | 90 | 390 € | 690 € |(surrealistický_atlas)[packs/04_surrealisticky_atlas/README.md]
 | **🏛️ Kulturní kódy** | Bloky reflektující kulturní symboly, mýty, stereotypy a společenské jevy (kulturní, naivní, filozofický). Pro konceptuální umění, výzkum, kritiku. | 100 | 440 € | 790 € |
-- [kultura-moc](doma/packs/05_kulturani_kody/kultura-moc.json)
-- [kultura-trh](doma/packs/05_kulturni_kody/kultura-trh)
-- [kultura-symboly](doma/packs/05_kulturni_kody/kultura-symboly.json)
-| **🕸️ Kompletní síť** | Všechny bloky dohromady (cca 500). Nejvyšší hodnota – nekonečné kombinace a permutace. | ~500 | 990 € | 1890 € |(doma/packs/06_kompletni_sit/README.md)
+- (kultura-moc)[packs/05_kulturani_kody/kultura_moc.json]
+- (kultura-trh)[packs/05_kulturni_kody/kultura_trh.json]
+- (kultura-symboly)[packs/05_kulturni_kody/kultura_symboly.json]
+| **🕸️ Kompletní síť** | Všechny bloky dohromady (cca 500). Nejvyšší hodnota – nekonečné kombinace a permutace. | ~500 | 990 € | 1890 € |(packs/06_kompletni_sit/README.md)
 
 ---
 
